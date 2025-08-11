@@ -1,1 +1,60 @@
+@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
+
+@import "./button.css";
 @import "tailwindcss";
+
+@theme {
+   --breakpoint-500: 500px;
+   --color-main-purple: #635fc7;
+   --color-light-purple: #a8a4ff;
+   --color-black-1: #000112;
+   --color-dark-grey: #20212c;
+   --color-dark-grey-1: #2b2c37;
+   --color-dark-grey-2: #3e3f4e;
+   --color-grey: #828fa3;
+   --color-light-grey: #e4ebfa;
+   --color-light-grey-1: #f4f7fd;
+   --color-red: #ea5555;
+   --color-red-1: #ff9898;
+}
+
+* {
+   font-family: "Plus Jakarta Sans", sans-serif;
+   font-optical-sizing: auto;
+   font-style: normal;
+}
+
+body {
+   overflow: hidden;
+}
+
+.flex-center {
+   @apply flex justify-center items-center;
+}
+
+.flex-items {
+   @apply flex items-center;
+}
+
+.card-shadow {
+   box-shadow: 0px 4px 6px 0px #364e7e1a;
+}
+
+@keyframes modalActive {
+   from {
+      transform: scale(0.7);
+   }
+   to {
+      transform: scale(1);
+   }
+}
+
+.modal-inner {
+   animation-name: modalActive;
+   animation-duration: 0.2s;
+}
+
+.modal-layout {
+   background: rgba(0, 0, 0, 0.5);
+   @apply left-0 bottom-0 top-0 right-0 z-50 fixed h-full;
+}

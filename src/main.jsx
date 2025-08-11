@@ -1,5 +1,5 @@
 import { StrictMode } from "react";
-import App from "./routes/App.jsx";
+import App from "./routes/Home.jsx";
 
 //import { createRoot } from 'react-dom/client'
 import "./styles/index.css";

@@ -1,0 +1,7 @@
+.btn {
+   @apply flex items-center justify-center rounded-full font-bold;
+
+   &.purple {
+      @apply bg-main-purple text-white;
+   }
+}
