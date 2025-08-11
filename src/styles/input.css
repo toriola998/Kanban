@@ -42,7 +42,7 @@ textarea {
 }
 
 .label {
-   @apply font-medium text-sm text-gray-700;
+   @apply text-xs mb-1 inline-flex font-bold;
 }
 
 .custom-file-input::-webkit-file-upload-button,

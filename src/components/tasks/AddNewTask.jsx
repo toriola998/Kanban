@@ -1,4 +1,4 @@
-import { useForm, Controller } from "react-hook-form";
+import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "../input-fields/TextInput";
 import TextAreaInput from "../input-fields/TextAreaInput";
@@ -14,6 +14,11 @@ export default function AddNewTask() {
       formState: { errors },
    } = useForm({
       resolver: yupResolver(schemas.taskSchema),
+   });
+
+   const { fields, append, remove } = useFieldArray({
+      name: "items",
+      control,
    });
 
    async function onSubmit(formData) {
@@ -41,6 +46,46 @@ export default function AddNewTask() {
                fieldName={register("description")}
                errorMessage={errors.description?.message}
             />
+
+            {/* {fields.length >= 1 && ( */}
+            <div>
+               <p className="label text-grey">Task</p>
+               <div className="flex flex-col gap-y-3">
+                  {fields.map((field, index) => {
+                     return (
+                        <div
+                           key={field.id}
+                           className="grid grid-cols-[auto_20px] gap-x-4"
+                        >
+                           <TextInput
+                              name="task"
+                              label=""
+                              placeholder="e.g. Make coffee"
+                              fieldName={register(`items.${index}.task`)}
+                              errorMessage={
+                                 errors?.items?.[index]?.task?.message
+                              }
+                           />
+                           <button type="button" onClick={() => remove(index)}>
+                              <img src="/assets/icon-cross.svg" alt="" />
+                           </button>
+                        </div>
+                     );
+                  })}
+               </div>
+            </div>
+            <button
+               className="btn sec-btn"
+               type="button"
+               onClick={() => {
+                  append({
+                     task: "",
+                  });
+               }}
+            >
+               + Add new subtask
+            </button>
+            {/* //)} */}
             <Controller
                name="status"
                control={control}
