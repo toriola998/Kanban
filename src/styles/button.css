@@ -8,4 +8,8 @@
    &.sec-btn {
       @apply bg-grey-3 text-main-purple text-[13px] hover:bg-grey-4;
    }
+
+   &.red {
+      @apply bg-red text-white text-[13px] hover:bg-red-1;
+   }
 }
