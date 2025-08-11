@@ -16,7 +16,7 @@ export default function AddNewTask() {
       resolver: yupResolver(schemas.taskSchema),
       defaultValues: {
          items: [{ task: "" }],
-         status:  { label: "To do", value: "To do" },
+         status: { label: "Todo", value: "Todo" },
       },
    });
 
@@ -34,7 +34,7 @@ export default function AddNewTask() {
       <ModalLayout title="Add New Task">
          <form
             onSubmit={handleSubmit(onSubmit)}
-            className="flex flex-col gap-y-3 h-[470px] overflow-y-auto -mr-4 pr-4 modal-scroll"
+            className="flex flex-col gap-y-6 h-[470px] overflow-y-auto -mr-4 pr-4 modal-scroll"
          >
             <TextInput
                label="Title"
@@ -74,25 +74,26 @@ export default function AddNewTask() {
                      );
                   })}
                </div>
+               <button
+                  className="btn sec-btn w-full mt-3"
+                  type="button"
+                  onClick={() => {
+                     append({
+                        task: "",
+                     });
+                  }}
+               >
+                  + Add new subtask
+               </button>
             </div>
-            <button
-               className="btn sec-btn"
-               type="button"
-               onClick={() => {
-                  append({
-                     task: "",
-                  });
-               }}
-            >
-               + Add new subtask
-            </button>
+
             <Controller
                name="status"
                control={control}
                render={({ field }) => (
                   <SelectInput
                      label="Status"
-                     options={["To do", "Doing", "Done"]}
+                     options={["Todo", "Doing", "Done"]}
                      field={field}
                      onChange={(selectedOption) => {
                         field.onChange(selectedOption);
