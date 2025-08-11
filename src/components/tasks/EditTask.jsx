@@ -25,6 +25,12 @@ export default function EditTask() {
       control,
    });
 
+   function addSubTask() {
+      append({
+         task: "",
+      });
+   }
+
    async function onSubmit(formData) {
       console.log(formData);
       setStep("account-validation");
@@ -77,11 +83,7 @@ export default function EditTask() {
                <button
                   className="btn sec-btn w-full mt-3"
                   type="button"
-                  onClick={() => {
-                     append({
-                        task: "",
-                     });
-                  }}
+                  onClick={addSubTask}
                >
                   + Add new subtask
                </button>
