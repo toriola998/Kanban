@@ -1,7 +1,7 @@
 .btn {
-   @apply flex items-center justify-center rounded-full font-bold;
+   @apply flex items-center justify-center rounded-full font-bold py-3 cursor-pointer;
 
    &.purple {
-      @apply bg-main-purple text-white;
+      @apply bg-main-purple text-white hover:bg-light-purple hover:transition-all;
    }
 }

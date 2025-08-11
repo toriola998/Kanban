@@ -1,5 +1,4 @@
 import Select, { components } from "react-select";
-const toOptions = (list) => list.map((item) => ({ label: item, option: item }));
 
 const DropdownIndicator = (props) => {
    return (
@@ -12,6 +11,8 @@ const DropdownIndicator = (props) => {
 const customStyles = {
    control: (provided, state) => ({
       ...provided,
+      fontWeight: "500",
+      color: "#000112",
       padding: "2px 0",
       borderRadius: "6px",
       border: state.isFocused
@@ -27,7 +28,7 @@ const customStyles = {
 
    option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? "#101828" : "white",
+      backgroundColor: state.isSelected ? "#f4f7fd" : "white",
       color: state.isSelected ? "#635fc7" : "#828fa3",
       fontSize: "13px",
       "&:hover": {
@@ -58,6 +59,9 @@ export default function SelectInput({
    const handleChange = (selectedOption) => {
       onChange(selectedOption);
    };
+   const toOptions = (list) =>
+      list.map((item) => ({ label: item, value: item }));
+
    return (
       <div className="relative">
          <label

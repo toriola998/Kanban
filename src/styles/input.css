@@ -1,0 +1,57 @@
+input {
+   outline: 0;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+   -webkit-appearance: none;
+   margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+   -moz-appearance: textfield;
+}
+
+.input-grid {
+   @apply flex flex-col sm:grid grid-cols-2 gap-5;
+}
+
+textarea {
+   @apply border;
+   &::placeholder {
+      @apply text-black-1 font-medium opacity-25 text-sm;
+   }
+
+   &:focus {
+      @apply border border-grey outline-0;
+   }
+}
+
+.input-wrapper {
+   @apply border flex items-center w-full rounded-lg;
+
+   input::placeholder {
+      @apply text-black-1 font-medium opacity-25 text-sm;
+   }
+
+   &:focus-within {
+      @apply border border-grey-2;
+   }
+}
+
+.label {
+   @apply font-medium text-sm text-gray-700;
+}
+
+.custom-file-input::-webkit-file-upload-button,
+.custom-file-input::-webkit-file-upload-button {
+   visibility: hidden;
+   display: none;
+}
+
+.custom-file-input {
+   color: rgba(0, 0, 0, 0);
+   display: contents;
+}

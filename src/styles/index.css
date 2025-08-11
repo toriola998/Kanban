@@ -1,6 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap");
 
 @import "./button.css";
+@import "./input.css";
 @import "tailwindcss";
 
 @theme {
@@ -14,6 +15,7 @@
    --color-grey: #828fa3;
    --color-light-grey: #e4ebfa;
    --color-light-grey-1: #f4f7fd;
+   --color-grey-2: #828fa340;
    --color-red: #ea5555;
    --color-red-1: #ff9898;
 }

@@ -1,6 +1,6 @@
 import DropdownMenu from "../DropdownMenu";
 import ModalLayout from "../ModalLayout";
-import SelectInput from "../SelectInput";
+import SelectInput from "../input-fields/SelectInput";
 
 export default function TaskInfo() {
    return (
