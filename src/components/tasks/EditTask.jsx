@@ -6,7 +6,7 @@ import SelectInput from "../input-fields/SelectInput";
 import ModalLayout from "../ModalLayout";
 import schemas from "../../schema";
 
-export default function AddNewTask() {
+export default function EditTask() {
    const {
       register,
       handleSubmit,
