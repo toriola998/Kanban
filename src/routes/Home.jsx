@@ -1,4 +1,4 @@
-import Header from "../components/Header";
+import Header from "../components/shared/Header";
 import SideNav from "../components/shared/SideNav";
 import TaskCard from "../components/tasks/TaskCard";
 

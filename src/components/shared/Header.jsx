@@ -1,5 +1,5 @@
 import { useState } from "react";
-import MobileNav from "./shared/MobileNav";
+import MobileNav from "./MobileNav";
 
 export default function Header({ title, addTask, showMenu }) {
    const [showMobileNav, setShowMobileNav] = useState(false);
