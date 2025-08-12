@@ -48,3 +48,7 @@ body {
 .list-item {
    @apply font-bold text-[15px] py-4 px-8 flex items-center gap-x-4 w-full;
 }
+
+.active-board {
+   filter: brightness(200%) contrast(150%);
+}
