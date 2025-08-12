@@ -29,9 +29,9 @@
    font-style: normal;
 }
 
-body {
+/* body {
    overflow: hidden;
-}
+} */
 
 .flex-center {
    @apply flex justify-center items-center;

@@ -14,7 +14,7 @@
 
 .modal-layout {
    background: rgba(0, 0, 0, 0.5);
-   @apply left-0 bottom-0 top-0 right-0 z-50 fixed h-full;
+   @apply left-0 bottom-0 top-0 right-0 z-90 fixed h-full;
 }
 
 /* width */

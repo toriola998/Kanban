@@ -1,24 +1,27 @@
-import DropdownMenu from "../DropdownMenu";
-import ModalLayout from "../ModalLayout";
+import DropdownMenu from "../shared/DropdownMenu";
+import ModalLayout from "../shared/ModalLayout";
 import SelectInput from "../input-fields/SelectInput";
 
-export default function TaskInfo() {
+export default function TaskInfo({ task, handleClick }) {
+   const completedTask = (arg) => {
+      return arg.filter((sub) => sub.isCompleted).length;
+   };
+
    return (
-      <ModalLayout>
+      <ModalLayout handleClick={handleClick}>
          <div className="grid grid-cols-[90%_auto] justify-between">
             <h1 className="text-black-1 font-bold text-lg leading-6">
-               Research pricing points of various competitors and trial
-               different business models
+               {task.title}
             </h1>
             <DropdownMenu actionType="Task" />
          </div>
 
          <p className="my-6 text-[13px] font-medium text-grey leading-6">
-            We know what we're planning to build for version one. Now we need to
-            finalise the first pricing model we'll use. Keep iterating the
-            subtasks until we have a coherent proposition.
+            {task.description}
          </p>
-         <p className="font-bold text-xs text-grey mb-4">Subtasks (2 of 3)</p>
+         <p className="font-bold text-xs text-grey mb-4">
+            Subtasks ({completedTask(task.subtasks)} of {task.subtasks.length})
+         </p>
 
          <div className="mb-6">
             <div className="bg-light-grey-1 rounded p-3 grid grid-cols-[16px_auto] gap-x-6 items-center">
