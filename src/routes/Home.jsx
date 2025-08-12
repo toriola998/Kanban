@@ -7,7 +7,7 @@ function App() {
       <div className="flex w-full">
          <SideNav />
          <div className="w-full">
-            <Header title="Platform Launch" />
+            <Header />
 
             <main className="bg-light-grey-1 min-h-screen px-4 py-6">
                <TaskCard />

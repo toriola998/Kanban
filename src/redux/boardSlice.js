@@ -1,11 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import data from "../../data.json";
 
+const initialBoards = [...data.boards];
+
 export const boardSlice = createSlice({
    name: "boards",
    initialState: {
-      value: [...data.boards],
-      activeBoard: "",
+      value: initialBoards,
+      activeBoard: initialBoards[0].name || "",
    },
    reducers: {
       setActiveBoard: (state, action) => {

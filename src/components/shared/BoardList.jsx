@@ -7,9 +7,8 @@ export default function BoardList({ children }) {
    const boardsList = boards.map((item) => item.name);
 
    const dispatch = useDispatch();
-   const activeBoard =
-      useSelector((state) => state.boards.activeBoard) || boardsList[0];
-   
+   const activeBoard = useSelector((state) => state.boards.activeBoard);
+
    return (
       <>
          <div className="px-8 pt-8 w-[inherit]">
