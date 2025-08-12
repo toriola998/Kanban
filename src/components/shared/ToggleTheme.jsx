@@ -5,7 +5,7 @@ export default function ToggleTheme() {
    const [enabled, setEnabled] = useState(false);
 
    return (
-      <div className="bg-light-grey-1 rounded-md flex-center gap-x-6 py-[14px] ml-6">
+      <div className="bg-light-grey-1 rounded-md flex-center gap-x-6 py-[14px] mx-6">
          <img src="/assets/icon-light-theme.svg" alt="" />
          <Switch
             checked={enabled}
