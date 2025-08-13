@@ -1,12 +1,13 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveTask } from "../redux/boardSlice";
+import { setActiveTask, deleteTask } from "../redux/boardSlice";
 import Header from "../components/shared/Header";
 import SideNav from "../components/shared/SideNav";
 import TaskCard from "../components/tasks/TaskCard";
 import TaskTitle from "../components/tasks/TaskTitle";
 import TaskInfo from "../components/tasks/TaskInfo";
 import EditTask from "../components/tasks/EditTask";
+import DeleteItem from "../components/shared/DeleteItem";
 
 function App() {
    const dispatch = useDispatch();
@@ -31,15 +32,21 @@ function App() {
    };
    const closeTaskInfo = () => setShowTaskInfo(false);
    const closeEditTask = () => setShowEditTask(false);
+   const closeDeleteTask = () => setShowDeleteTask(false);
 
    const handleEditTask = () => {
       setShowEditTask(true);
       closeTaskInfo();
    };
 
-   const handleDeleteTask = () => {
+   const handleShowDeleteTask = () => {
       setShowDeleteTask(true);
       closeTaskInfo();
+   };
+
+   const handleDeleteTask = () => {
+      dispatch(deleteTask());
+      closeDeleteTask();
    };
 
    return (
@@ -83,7 +90,7 @@ function App() {
          {showTaskInfo && (
             <TaskInfo
                edit={handleEditTask}
-               deleteItem={handleDeleteTask}
+               deleteItem={handleShowDeleteTask}
                handleClick={closeTaskInfo}
                onChangeStatus={closeTaskInfo}
             />
@@ -92,6 +99,15 @@ function App() {
             <EditTask
                handleClick={closeEditTask}
                onEditSuccess={closeEditTask}
+            />
+         )}
+         {showDeleteTask && (
+            <DeleteItem
+               action="task"
+               title={task.title}
+               handleClick={closeDeleteTask}
+               cancel={closeDeleteTask}
+               deleteItem={handleDeleteTask}
             />
          )}
       </>

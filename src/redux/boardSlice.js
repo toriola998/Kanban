@@ -102,6 +102,22 @@ export const boardSlice = createSlice({
             };
          }
       },
+      deleteTask: (state) => {
+         const { columnIndex, taskIndex } = state.activeTask || {};
+
+         if (typeof columnIndex !== "number" || typeof taskIndex !== "number") {
+            console.warn("Invalid task position — cannot delete");
+            return;
+         }
+
+         const activeBoardData = state.value.find(
+            (board) => board.name === state.activeBoard,
+         );
+         if (!activeBoardData) return;
+
+         activeBoardData.columns[columnIndex].tasks.splice(taskIndex, 1);
+         state.activeTask = null;
+      },
    },
 });
 
@@ -111,6 +127,7 @@ export const {
    toggleSubtask,
    updateTaskStatus,
    updateTaskInfo,
+   deleteTask,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;
