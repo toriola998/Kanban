@@ -1,10 +1,27 @@
+import { toggleSubtask } from "../../redux/boardSlice";
+import { useSelector, useDispatch } from "react-redux";
 import DropdownMenu from "../shared/DropdownMenu";
 import ModalLayout from "../shared/ModalLayout";
 import SelectInput from "../input-fields/SelectInput";
 
 export default function TaskInfo({ task, handleClick }) {
+   const dispatch = useDispatch();
    const completedTask = (arg) => {
       return arg.filter((sub) => sub.isCompleted).length;
+   };
+
+   const { activeBoard, value, activeTask } = useSelector(
+      (state) => state.boards,
+   );
+
+   const handleCheckboxChange = (subtaskIndex) => {
+      dispatch(
+         toggleSubtask({
+            columnIndex: activeTask.columnIndex,
+            taskIndex: activeTask.taskIndex,
+            subtaskIndex,
+         }),
+      );
    };
 
    return (
@@ -23,19 +40,31 @@ export default function TaskInfo({ task, handleClick }) {
             Subtasks ({completedTask(task.subtasks)} of {task.subtasks.length})
          </p>
 
-         <div className="mb-6">
-            <div className="bg-light-grey-1 rounded p-3 grid grid-cols-[16px_auto] gap-x-6 items-center">
-               <input type="checkbox" className="h-4 w-4 accent-main-purple" />
-               <p className="text-xs font-bold text-black-1">
-                  Talk to potential customers about our proposed solution and
-                  ask for fair price expectancy
-               </p>
-            </div>
+         <div className="mb-6 flex flex-col gap-y-2">
+            {task.subtasks.map((item, index) => (
+               <div
+                  className="bg-light-grey-1 rounded p-3 grid grid-cols-[16px_auto] gap-x-6 items-center"
+                  key={index}
+               >
+                  <input
+                     id={index}
+                     name={index}
+                     type="checkbox"
+                     className="h-4 w-4 accent-main-purple"
+                     checked={item.isCompleted}
+                     onChange={() => handleCheckboxChange(index)}
+                  />
+                  <label htmlFor={index} className="text-xs font-bold text-black-1 peer-checked:line-through peer-checked:text-grey">
+                     {item.title}
+                  </label>
+               </div>
+            ))}
          </div>
 
          <SelectInput
             label="Current Status"
             options={["To do", "Doing", "Done"]}
+            defaultValue={{ label: "Todo", value: "Todo" }}
          />
          {/* field={field}
             onChange={(selectedOption) => {
