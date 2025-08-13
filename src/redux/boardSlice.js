@@ -17,6 +17,18 @@ export const boardSlice = createSlice({
       setActiveTask: (state, action) => {
          state.activeTask = action.payload; // { columnIndex, taskIndex }
       },
+      addNewTask: (state, action) => {
+         const { newTask, columnIndex } = action.payload;
+         if (typeof columnIndex !== "number") return;
+
+         const activeBoardData = state.value.find(
+            (board) => board.name === state.activeBoard,
+         );
+         if (!activeBoardData) return;
+
+         activeBoardData.columns[columnIndex].tasks.push(newTask);
+      },
+
       toggleSubtask: (state, action) => {
          const { subtaskIndex } = action.payload;
          const { columnIndex, taskIndex } = state.activeTask || {};
@@ -128,6 +140,7 @@ export const {
    updateTaskStatus,
    updateTaskInfo,
    deleteTask,
+   addNewTask,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

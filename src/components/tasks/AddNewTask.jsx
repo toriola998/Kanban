@@ -1,12 +1,25 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { addNewTask } from "../../redux/boardSlice";
+import { toast } from "react-toastify";
 import TextInput from "../input-fields/TextInput";
 import TextAreaInput from "../input-fields/TextAreaInput";
 import SelectInput from "../input-fields/SelectInput";
-import ModalLayout from "../ModalLayout";
+import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
 
-export default function AddNewTask() {
+export default function AddNewTask({ onAddTaskSuccess, handleClick }) {
+   const dispatch = useDispatch();
+
+   const activeBoard = useSelector((state) =>
+      state.boards.value.find(
+         (board) => board.name === state.boards.activeBoard,
+      ),
+   );
+
+   const columnsList = activeBoard?.columns.map((column) => column.name) || [];
+
    const {
       register,
       handleSubmit,
@@ -15,13 +28,13 @@ export default function AddNewTask() {
    } = useForm({
       resolver: yupResolver(schemas.taskSchema),
       defaultValues: {
-         items: [{ task: "" }],
+         subtasks: [{ task: "" }],
          status: { label: "Todo", value: "Todo" },
       },
    });
 
    const { fields, append, remove } = useFieldArray({
-      name: "items",
+      name: "subtasks",
       control,
    });
 
@@ -33,11 +46,29 @@ export default function AddNewTask() {
 
    async function onSubmit(formData) {
       console.log(formData);
-      setStep("account-validation");
+      let payload = {
+         title: formData.title,
+         description: formData.description,
+         status: formData.status.value,
+         subtasks: formData.subtasks.map((item) => ({
+            title: item.task, // or item if it's just a string
+            isCompleted: false,
+         })),
+      };
+
+      dispatch(
+         addNewTask({
+            newTask: { ...payload },
+            columnIndex: columnsList.indexOf(formData.status.value),
+         }),
+      );
+      console.log(payload, activeBoard);
+      toast.success("Task successfully created");
+      onAddTaskSuccess();
    }
 
    return (
-      <ModalLayout title="Add New Task">
+      <ModalLayout title="Add New Task" handleClick={handleClick}>
          <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-y-6 h-[470px] overflow-y-auto -mr-4 pr-4 modal-scroll"
@@ -68,9 +99,9 @@ export default function AddNewTask() {
                            <TextInput
                               name="task"
                               placeholder="e.g. Make coffee"
-                              fieldName={register(`items.${index}.task`)}
+                              fieldName={register(`subtasks.${index}.task`)}
                               errorMessage={
-                                 errors?.items?.[index]?.task?.message
+                                 errors?.subtasks?.[index]?.task?.message
                               }
                            />
                            <button type="button" onClick={() => remove(index)}>
@@ -95,7 +126,7 @@ export default function AddNewTask() {
                render={({ field }) => (
                   <SelectInput
                      label="Status"
-                     options={["Todo", "Doing", "Done"]}
+                     options={columnsList}
                      field={field}
                      onChange={(selectedOption) => {
                         field.onChange(selectedOption);

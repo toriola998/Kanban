@@ -7,6 +7,7 @@ import TaskCard from "../components/tasks/TaskCard";
 import TaskTitle from "../components/tasks/TaskTitle";
 import TaskInfo from "../components/tasks/TaskInfo";
 import EditTask from "../components/tasks/EditTask";
+import AddNewTask from "../components/tasks/AddNewTask";
 import DeleteItem from "../components/shared/DeleteItem";
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
       return arg.filter((sub) => sub.isCompleted).length;
    };
 
+   const [showAddTask, setShowAddTask] = useState(false);
    const [showTaskInfo, setShowTaskInfo] = useState(false);
    const [showEditTask, setShowEditTask] = useState(false);
    const [showDeleteTask, setShowDeleteTask] = useState(false);
@@ -33,6 +35,7 @@ function App() {
    const closeTaskInfo = () => setShowTaskInfo(false);
    const closeEditTask = () => setShowEditTask(false);
    const closeDeleteTask = () => setShowDeleteTask(false);
+   const closeAddTask = () => setShowAddTask(false);
 
    const handleEditTask = () => {
       setShowEditTask(true);
@@ -49,12 +52,14 @@ function App() {
       closeDeleteTask();
    };
 
+   const handleShowAddTask = () => setShowAddTask(true);
+
    return (
       <>
          <div className="flex w-full">
             <SideNav />
             <div className="w-full">
-               <Header />
+               <Header addTask={handleShowAddTask} />
 
                <main className="bg-light-grey-1 min-h-screen px-4 py-6">
                   <div className="flex gap-6">
@@ -108,6 +113,12 @@ function App() {
                handleClick={closeDeleteTask}
                cancel={closeDeleteTask}
                deleteItem={handleDeleteTask}
+            />
+         )}
+         {showAddTask && (
+            <AddNewTask
+               handleClick={closeAddTask}
+               onAddTaskSuccess={closeAddTask}
             />
          )}
       </>

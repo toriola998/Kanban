@@ -34,7 +34,10 @@ export default function Header({ title, addTask, showMenu }) {
             </div>
 
             <div className="flex-items gap-x-4">
-               <button className="btn purple px-4 py-2 gap-x-2">
+               <button
+                  className="btn purple px-4 py-2 gap-x-2"
+                  onClick={addTask}
+               >
                   <img src="/assets/icon-add-task-mobile.svg" alt="" />
                   <span className="hidden md:block text-sm">Add New Task</span>
                </button>

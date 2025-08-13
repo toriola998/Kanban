@@ -62,7 +62,11 @@ export default function EditTask({ handleClick, onEditSuccess }) {
          title: formData.title,
          description: formData.description,
          status: formData.status.value,
-         subtasks: formData.subtasks,
+         //subtasks: formData.subtasks,
+         subtasks: formData.subtasks.map((item) => ({
+            title: item.task, // or item if it's just a string
+            isCompleted: item.isCompleted,
+         })),
       };
       dispatch(updateTaskInfo(payload));
       toast.success("Task updated successfully");
