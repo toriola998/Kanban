@@ -1,12 +1,34 @@
+import { useSelector, useDispatch } from "react-redux";
+import { updateTaskInfo } from "../../redux/boardSlice";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "../input-fields/TextInput";
 import TextAreaInput from "../input-fields/TextAreaInput";
 import SelectInput from "../input-fields/SelectInput";
-import ModalLayout from "../ModalLayout";
+import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
 
-export default function EditTask() {
+export default function EditTask({ handleClick }) {
+   const dispatch = useDispatch();
+   const {
+      activeBoard,
+      value: boardList,
+      activeTask,
+   } = useSelector((state) => state.boards);
+
+   const activeBoardData = boardList.find(
+      (board) => board.name === activeBoard,
+   );
+
+   const task =
+      activeTask && activeBoardData
+         ? activeBoardData.columns[activeTask.columnIndex].tasks[
+              activeTask.taskIndex
+           ]
+         : null;
+
+   if (!task) return null;
+
    const {
       register,
       handleSubmit,
@@ -15,13 +37,15 @@ export default function EditTask() {
    } = useForm({
       resolver: yupResolver(schemas.taskSchema),
       defaultValues: {
-         items: [{ task: "" }],
-         status: { label: "Todo", value: "Todo" },
+         subtasks: task.subtasks.map((item) => ({
+            task: item.title || "",
+         })),
+         status: { label: task.status, value: task.status },
       },
    });
 
    const { fields, append, remove } = useFieldArray({
-      name: "items",
+      name: "subtasks",
       control,
    });
 
@@ -33,11 +57,17 @@ export default function EditTask() {
 
    async function onSubmit(formData) {
       console.log(formData);
-      setStep("account-validation");
+      let payload = {
+         title: formData.title,
+         description: formData.description,
+         status: formData.status.value,
+         subtasks: formData.subtasks,
+      };
+      dispatch(updateTaskInfo(payload));
    }
 
    return (
-      <ModalLayout title="Add New Task">
+      <ModalLayout title="Edit Task" handleClick={handleClick}>
          <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-y-6 h-[470px] overflow-y-auto -mr-4 pr-4 modal-scroll"
@@ -48,6 +78,7 @@ export default function EditTask() {
                placeholder="e.g. Take coffee break"
                fieldName={register("title")}
                errorMessage={errors.title?.message}
+               defaultValue={task.title}
             />
             <TextAreaInput
                label="Description"
@@ -55,6 +86,7 @@ export default function EditTask() {
                placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
                fieldName={register("description")}
                errorMessage={errors.description?.message}
+               defaultValue={task.description}
             />
             <div>
                <p className="label text-grey">Subtasks</p>
@@ -68,9 +100,9 @@ export default function EditTask() {
                            <TextInput
                               name="task"
                               placeholder="e.g. Make coffee"
-                              fieldName={register(`items.${index}.task`)}
+                              fieldName={register(`subtasks.${index}.task`)}
                               errorMessage={
-                                 errors?.items?.[index]?.task?.message
+                                 errors?.subtasks?.[index]?.task?.message
                               }
                            />
                            <button type="button" onClick={() => remove(index)}>

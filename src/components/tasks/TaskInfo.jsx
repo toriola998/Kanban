@@ -5,7 +5,7 @@ import DropdownMenu from "../shared/DropdownMenu";
 import ModalLayout from "../shared/ModalLayout";
 import SelectInput from "../input-fields/SelectInput";
 
-export default function TaskInfo({ handleClick }) {
+export default function TaskInfo({ handleClick, edit, deleteItem }) {
    const dispatch = useDispatch();
 
    const {
@@ -44,7 +44,11 @@ export default function TaskInfo({ handleClick }) {
             <h1 className="text-black-1 font-bold text-lg leading-6">
                {task.title}
             </h1>
-            <DropdownMenu actionType="Task" />
+            <DropdownMenu
+               edit={edit}
+               deleteItem={deleteItem}
+               actionType="Task"
+            />
          </div>
 
          <p className="my-6 text-[13px] font-medium text-grey leading-6">

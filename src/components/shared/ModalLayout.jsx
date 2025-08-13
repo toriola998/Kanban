@@ -12,7 +12,7 @@ export default function ModalLayout({
          >
             {title && (
                <p
-                  className={`text-lg text-black font-bold mb-6 ${titleColor === "black" ? "text-black" : "text-red"}`}
+                  className={`text-lg text-black font-bold mb-4 ${titleColor === "black" ? "text-black" : "text-red"}`}
                >
                   {title}
                </p>

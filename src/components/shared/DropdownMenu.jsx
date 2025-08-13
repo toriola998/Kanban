@@ -1,6 +1,6 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
-export default function DropdownMenu({ actionType }) {
+export default function DropdownMenu({ actionType, edit, deleteItem }) {
    const menuItem =
       "font-medium text-sm text-start py-3 px-4 cursor-pointer hover:bg-light-grey-1";
 
@@ -12,12 +12,15 @@ export default function DropdownMenu({ actionType }) {
             </MenuButton>
             <MenuItems className="absolute rounded-lg z-50 bg-white right-0 top-10 w-[170px] flex flex-col shadow-lg outline-none">
                <MenuItem>
-                  <button className={`text-grey ${menuItem}`}>
+                  <button onClick={edit} className={`text-grey ${menuItem}`}>
                      Edit {actionType}
                   </button>
                </MenuItem>
                <MenuItem>
-                  <button className={`text-red ${menuItem}`}>
+                  <button
+                     onClick={deleteItem}
+                     className={`text-red ${menuItem}`}
+                  >
                      Delete {actionType}
                   </button>
                </MenuItem>

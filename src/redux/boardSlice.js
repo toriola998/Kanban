@@ -55,9 +55,51 @@ export const boardSlice = createSlice({
          const targetColumn = activeBoardData.columns.find(
             (col) => col.name.toLowerCase() === newStatus.toLowerCase(),
          );
-
          if (targetColumn) {
             targetColumn.tasks.push(movedTask);
+         }
+      },
+      updateTaskInfo: (state, action) => {
+         const updatedFields = action.payload;
+         const { columnIndex, taskIndex } = state.activeTask || {};
+
+         const activeBoardData = state.value.find(
+            (board) => board.name === state.activeBoard,
+         );
+         if (!activeBoardData) return;
+
+         const currentTask =
+            activeBoardData.columns[columnIndex].tasks[taskIndex];
+
+         // If status changes → move to another column
+         if (
+            updatedFields.status &&
+            updatedFields.status.toLowerCase() !==
+               currentTask.status.toLowerCase()
+         ) {
+            // Remove from current column
+            const [movedTask] = activeBoardData.columns[
+               columnIndex
+            ].tasks.splice(taskIndex, 1);
+
+            const targetColumn = activeBoardData.columns.find(
+               (col) =>
+                  col.name.toLowerCase() === updatedFields.status.toLowerCase(),
+            );
+
+            // Push into target column with merged updates
+            if (targetColumn) {
+               targetColumn.tasks.push({
+                  ...movedTask,
+                  ...updatedFields,
+               });
+            }
+         } else {
+            // Just merge updates in place
+            activeBoardData.columns[columnIndex].tasks[taskIndex] = {
+               ...currentTask,
+               ...updatedFields,
+            };
          }
       },
    },
@@ -68,6 +110,7 @@ export const {
    setActiveTask,
    toggleSubtask,
    updateTaskStatus,
+   updateTaskInfo,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;

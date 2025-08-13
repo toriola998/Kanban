@@ -6,6 +6,7 @@ import SideNav from "../components/shared/SideNav";
 import TaskCard from "../components/tasks/TaskCard";
 import TaskTitle from "../components/tasks/TaskTitle";
 import TaskInfo from "../components/tasks/TaskInfo";
+import EditTask from "../components/tasks/EditTask";
 
 function App() {
    const dispatch = useDispatch();
@@ -19,12 +20,26 @@ function App() {
    };
 
    const [showTaskInfo, setShowTaskInfo] = useState(false);
+   const [showEditTask, setShowEditTask] = useState(false);
+   const [showDeleteTask, setShowDeleteTask] = useState(false);
    const [task, setTask] = useState(null);
 
    const handleShowTaskInfo = (task, columnIndex, taskIndex) => {
       setShowTaskInfo(true);
       setTask(task);
       dispatch(setActiveTask({ columnIndex, taskIndex }));
+   };
+   const closeTaskInfo = () => setShowTaskInfo(false);
+   const closeEditTask = () => setShowEditTask(false);
+
+   const handleEditTask = () => {
+      setShowEditTask(true);
+      closeTaskInfo();
+   };
+
+   const handleDeleteTask = () => {
+      setShowDeleteTask(true);
+      closeTaskInfo();
    };
 
    return (
@@ -66,8 +81,13 @@ function App() {
             </div>
          </div>
          {showTaskInfo && (
-            <TaskInfo handleClick={() => setShowTaskInfo(false)} />
+            <TaskInfo
+               edit={handleEditTask}
+               deleteItem={handleDeleteTask}
+               handleClick={closeTaskInfo}
+            />
          )}
+         {showEditTask && <EditTask handleClick={closeEditTask} />}
       </>
    );
 }
