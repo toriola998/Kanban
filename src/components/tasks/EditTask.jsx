@@ -2,13 +2,14 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateTaskInfo } from "../../redux/boardSlice";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
 import TextInput from "../input-fields/TextInput";
 import TextAreaInput from "../input-fields/TextAreaInput";
 import SelectInput from "../input-fields/SelectInput";
 import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
 
-export default function EditTask({ handleClick }) {
+export default function EditTask({ handleClick, onEditSuccess }) {
    const dispatch = useDispatch();
    const {
       activeBoard,
@@ -64,6 +65,8 @@ export default function EditTask({ handleClick }) {
          subtasks: formData.subtasks,
       };
       dispatch(updateTaskInfo(payload));
+      toast.success("Task updated successfully");
+      onEditSuccess();
    }
 
    return (

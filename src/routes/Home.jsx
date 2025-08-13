@@ -85,9 +85,15 @@ function App() {
                edit={handleEditTask}
                deleteItem={handleDeleteTask}
                handleClick={closeTaskInfo}
+               onChangeStatus={closeTaskInfo}
             />
          )}
-         {showEditTask && <EditTask handleClick={closeEditTask} />}
+         {showEditTask && (
+            <EditTask
+               handleClick={closeEditTask}
+               onEditSuccess={closeEditTask}
+            />
+         )}
       </>
    );
 }

@@ -5,7 +5,12 @@ import DropdownMenu from "../shared/DropdownMenu";
 import ModalLayout from "../shared/ModalLayout";
 import SelectInput from "../input-fields/SelectInput";
 
-export default function TaskInfo({ handleClick, edit, deleteItem }) {
+export default function TaskInfo({
+   handleClick,
+   edit,
+   deleteItem,
+   onChangeStatus,
+}) {
    const dispatch = useDispatch();
 
    const {
@@ -36,6 +41,7 @@ export default function TaskInfo({ handleClick, edit, deleteItem }) {
    const handleSelectChange = (option) => {
       setSelectedOption(option);
       dispatch(updateTaskStatus(option?.value));
+      onChangeStatus();
    };
 
    return (
