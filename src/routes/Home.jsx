@@ -8,7 +8,7 @@ import TaskTitle from "../components/tasks/TaskTitle";
 import TaskInfo from "../components/tasks/TaskInfo";
 
 function App() {
-   const dispatch = useDispatch()
+   const dispatch = useDispatch();
    const boards = useSelector((state) => state.boards.value);
    const activeBoard = useSelector((state) => state.boards.activeBoard);
 
@@ -70,7 +70,7 @@ function App() {
             </div>
          </div>
          {showTaskInfo && (
-            <TaskInfo task={task} handleClick={() => setShowTaskInfo(false)} />
+            <TaskInfo handleClick={() => setShowTaskInfo(false)} />
          )}
       </>
    );

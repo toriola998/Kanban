@@ -4,25 +4,43 @@ import DropdownMenu from "../shared/DropdownMenu";
 import ModalLayout from "../shared/ModalLayout";
 import SelectInput from "../input-fields/SelectInput";
 
-export default function TaskInfo({ task, handleClick }) {
+export default function TaskInfo({ handleClick }) {
    const dispatch = useDispatch();
-   const completedTask = (arg) => {
-      return arg.filter((sub) => sub.isCompleted).length;
-   };
+   //    const completedTask = (arg) => {
+   //       return arg.filter((sub) => sub.isCompleted).length;
+   //    };
+
+   //    const { activeBoard, value, activeTask } = useSelector((state) => state.boards);
+
+   // const activeBoardData = value.find(board => board.name === activeBoard);
+   // const currentTask = activeBoardData.columns[activeTask.columnIndex]
+   //    .tasks[activeTask.taskIndex];
+
+   //    const handleCheckboxChange = (subtaskIndex) => {
+   //       dispatch(
+   //          toggleSubtask({
+   //             columnIndex: activeTask.columnIndex,
+   //             taskIndex: activeTask.taskIndex,
+   //             subtaskIndex,
+   //          }),
+   //       );
+   //    };
 
    const { activeBoard, value, activeTask } = useSelector(
       (state) => state.boards,
    );
+   const activeBoardData = value.find((board) => board.name === activeBoard);
 
-   const handleCheckboxChange = (subtaskIndex) => {
-      dispatch(
-         toggleSubtask({
-            columnIndex: activeTask.columnIndex,
-            taskIndex: activeTask.taskIndex,
-            subtaskIndex,
-         }),
-      );
-   };
+   const task =
+      activeTask && activeBoardData
+         ? activeBoardData.columns[activeTask.columnIndex].tasks[
+              activeTask.taskIndex
+           ]
+         : null;
+
+   if (!task) return null;
+
+   const completedCount = task.subtasks.filter((s) => s.isCompleted).length;
 
    return (
       <ModalLayout handleClick={handleClick}>
@@ -37,25 +55,31 @@ export default function TaskInfo({ task, handleClick }) {
             {task.description}
          </p>
          <p className="font-bold text-xs text-grey mb-4">
-            Subtasks ({completedTask(task.subtasks)} of {task.subtasks.length})
+            Subtasks ({completedCount} of {task.subtasks.length})
          </p>
 
          <div className="mb-6 flex flex-col gap-y-2">
             {task.subtasks.map((item, index) => (
-               <div
-                  className="bg-light-grey-1 rounded p-3 grid grid-cols-[16px_auto] gap-x-6 items-center"
-                  key={index}
-               >
-                  <input
-                     id={index}
-                     name={index}
-                     type="checkbox"
-                     className="h-4 w-4 accent-main-purple"
-                     checked={item.isCompleted}
-                     onChange={() => handleCheckboxChange(index)}
-                  />
-                  <label htmlFor={index} className="text-xs font-bold text-black-1 peer-checked:line-through peer-checked:text-grey">
-                     {item.title}
+               <div className="bg-light-grey-1 rounded p-3" key={index}>
+                  <label
+                     htmlFor={`subtask-${index}`}
+                     className="text-xs font-bold text-black-1 peer-checked:line-through peer-checked:text-grey  grid grid-cols-[16px_auto] gap-x-6 items-center"
+                  >
+                     <input
+                        id={`subtask-${index}`}
+                        name={index}
+                        className="accent-main-purple h-5 w-5"
+                        checked={item.isCompleted}
+                        type="checkbox"
+                        onChange={() =>
+                           dispatch(
+                              toggleSubtask({
+                                 subtaskIndex: index,
+                              }),
+                           )
+                        }
+                     />
+                     <span>{item.title}</span>
                   </label>
                </div>
             ))}
