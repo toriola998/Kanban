@@ -21,10 +21,6 @@ function App() {
    const [showTaskInfo, setShowTaskInfo] = useState(false);
    const [task, setTask] = useState(null);
 
-   // const handleShowTaskInfo = (arg) => {
-   //    setShowTaskInfo(true);
-   //    setTask(arg);
-   // };
    const handleShowTaskInfo = (task, columnIndex, taskIndex) => {
       setShowTaskInfo(true);
       setTask(task);

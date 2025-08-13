@@ -1,35 +1,22 @@
-import { toggleSubtask } from "../../redux/boardSlice";
+import { toggleSubtask, updateTaskStatus } from "../../redux/boardSlice";
 import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 import DropdownMenu from "../shared/DropdownMenu";
 import ModalLayout from "../shared/ModalLayout";
 import SelectInput from "../input-fields/SelectInput";
 
 export default function TaskInfo({ handleClick }) {
    const dispatch = useDispatch();
-   //    const completedTask = (arg) => {
-   //       return arg.filter((sub) => sub.isCompleted).length;
-   //    };
 
-   //    const { activeBoard, value, activeTask } = useSelector((state) => state.boards);
+   const {
+      activeBoard,
+      value: boardList,
+      activeTask,
+   } = useSelector((state) => state.boards);
 
-   // const activeBoardData = value.find(board => board.name === activeBoard);
-   // const currentTask = activeBoardData.columns[activeTask.columnIndex]
-   //    .tasks[activeTask.taskIndex];
-
-   //    const handleCheckboxChange = (subtaskIndex) => {
-   //       dispatch(
-   //          toggleSubtask({
-   //             columnIndex: activeTask.columnIndex,
-   //             taskIndex: activeTask.taskIndex,
-   //             subtaskIndex,
-   //          }),
-   //       );
-   //    };
-
-   const { activeBoard, value, activeTask } = useSelector(
-      (state) => state.boards,
+   const activeBoardData = boardList.find(
+      (board) => board.name === activeBoard,
    );
-   const activeBoardData = value.find((board) => board.name === activeBoard);
 
    const task =
       activeTask && activeBoardData
@@ -41,6 +28,15 @@ export default function TaskInfo({ handleClick }) {
    if (!task) return null;
 
    const completedCount = task.subtasks.filter((s) => s.isCompleted).length;
+
+   const defaultOption = { label: task.status, value: task.status };
+
+   const [selectedOption, setSelectedOption] = useState(defaultOption);
+
+   const handleSelectChange = (option) => {
+      setSelectedOption(option);
+      dispatch(updateTaskStatus(option?.value));
+   };
 
    return (
       <ModalLayout handleClick={handleClick}>
@@ -63,12 +59,12 @@ export default function TaskInfo({ handleClick }) {
                <div className="bg-light-grey-1 rounded p-3" key={index}>
                   <label
                      htmlFor={`subtask-${index}`}
-                     className="text-xs font-bold text-black-1 peer-checked:line-through peer-checked:text-grey  grid grid-cols-[16px_auto] gap-x-6 items-center"
+                     className="grid grid-cols-[16px_auto] gap-x-6 items-center"
                   >
                      <input
                         id={`subtask-${index}`}
                         name={index}
-                        className="accent-main-purple h-5 w-5"
+                        className="peer accent-main-purple h-4 w-4"
                         checked={item.isCompleted}
                         type="checkbox"
                         onChange={() =>
@@ -79,21 +75,20 @@ export default function TaskInfo({ handleClick }) {
                            )
                         }
                      />
-                     <span>{item.title}</span>
+                     <span className="text-xs font-bold text-black-1 peer-checked:line-through peer-checked:opacity-50">
+                        {item.title}
+                     </span>
                   </label>
                </div>
             ))}
          </div>
-
+         {/* errorMessage={error} */}
          <SelectInput
             label="Current Status"
-            options={["To do", "Doing", "Done"]}
-            defaultValue={{ label: "Todo", value: "Todo" }}
+            options={["Todo", "Doing", "Done"]}
+            field={{ value: selectedOption }}
+            onChange={handleSelectChange}
          />
-         {/* field={field}
-            onChange={(selectedOption) => {
-               field.onChange(selectedOption);
-            }} */}
       </ModalLayout>
    );
 }

@@ -33,10 +33,41 @@ export const boardSlice = createSlice({
             subtask.isCompleted = !subtask.isCompleted;
          }
       },
+      updateTaskStatus: (state, action) => {
+         const { columnIndex, taskIndex } = state.activeTask || {};
+         const newStatus = action.payload;
+
+         const activeBoardData = state.value.find(
+            (board) => board.name === state.activeBoard,
+         );
+
+         if (!activeBoardData) return;
+
+         // Remove task from old column
+         const [movedTask] = activeBoardData.columns[columnIndex].tasks.splice(
+            taskIndex,
+            1,
+         );
+         if (!movedTask) return;
+
+         movedTask.status = newStatus;
+
+         const targetColumn = activeBoardData.columns.find(
+            (col) => col.name.toLowerCase() === newStatus.toLowerCase(),
+         );
+
+         if (targetColumn) {
+            targetColumn.tasks.push(movedTask);
+         }
+      },
    },
 });
 
-export const { setActiveBoard, setActiveTask, toggleSubtask } =
-   boardSlice.actions;
+export const {
+   setActiveBoard,
+   setActiveTask,
+   toggleSubtask,
+   updateTaskStatus,
+} = boardSlice.actions;
 
 export default boardSlice.reducer;
