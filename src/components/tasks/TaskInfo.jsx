@@ -22,6 +22,8 @@ export default function TaskInfo({
    const activeBoardData = boardList.find(
       (board) => board.name === activeBoard,
    );
+   const columnsList =
+      activeBoardData?.columns.map((column) => column.name) || [];
 
    const task =
       activeTask && activeBoardData
@@ -95,7 +97,7 @@ export default function TaskInfo({
          {/* errorMessage={error} */}
          <SelectInput
             label="Current Status"
-            options={["Todo", "Doing", "Done"]}
+            options={columnsList}
             field={{ value: selectedOption }}
             onChange={handleSelectChange}
          />

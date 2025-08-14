@@ -21,6 +21,9 @@ export default function EditTask({ handleClick, onEditSuccess }) {
       (board) => board.name === activeBoard,
    );
 
+   const columnsList =
+      activeBoardData?.columns.map((column) => column.name) || [];
+
    const task =
       activeTask && activeBoardData
          ? activeBoardData.columns[activeTask.columnIndex].tasks[
@@ -134,7 +137,7 @@ export default function EditTask({ handleClick, onEditSuccess }) {
                render={({ field }) => (
                   <SelectInput
                      label="Status"
-                     options={["Todo", "Doing", "Done"]}
+                     options={columnsList}
                      field={field}
                      onChange={(selectedOption) => {
                         field.onChange(selectedOption);

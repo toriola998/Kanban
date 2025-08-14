@@ -17,7 +17,6 @@ export default function AddNewTask({ onAddTaskSuccess, handleClick }) {
          (board) => board.name === state.boards.activeBoard,
       ),
    );
-
    const columnsList = activeBoard?.columns.map((column) => column.name) || [];
 
    const {
