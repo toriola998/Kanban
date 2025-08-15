@@ -1,14 +1,16 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
 import { createNewBoard } from "../../redux/boardSlice";
 import TextInput from "../input-fields/TextInput";
 import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
-import { toast } from "react-toastify";
 
 export default function AddNewBoard({ handleClick, onCreateBoardSuccess }) {
    const dispatch = useDispatch();
+   const { boardsList } = useSelector((state) => state.boards);
+   const boardNames = boardsList.map((item) => item.name);
 
    const {
       register,
@@ -32,17 +34,43 @@ export default function AddNewBoard({ handleClick, onCreateBoardSuccess }) {
          column: "",
       });
    }
-   async function onSubmit(formData) {
+
+   function onSubmit(formData) {
       let payload = {
          name: formData.boardName,
-         columns: formData.columns.map((item) => ({
-            name: item.column,
-            tasks: [],
-         })),
       };
+      const isNameExist = boardNames.find(
+         (item) => item.toLowerCase() === formData.boardName.toLowerCase(),
+      );
+      if (isNameExist) {
+         toast.error("Board Name already exist");
+         return;
+      }
+      let filteredColumns = [];
+
+      if (formData.columns.length === 1) {
+         // Only include if name is not empty
+         if (formData.columns[0].column.trim() !== "") {
+            filteredColumns.push({
+               name: formData.columns[0].column,
+               tasks: [],
+            });
+         }
+      } else if (formData.columns.length > 1) {
+         // Filter out any columns with empty names
+         filteredColumns = formData.columns
+            .filter((item) => item.column.trim() !== "")
+            .map((item) => ({
+               name: item.column,
+               tasks: [],
+            }));
+      }
+      if (filteredColumns.length > 0) {
+         payload.columns = filteredColumns;
+      }
+
       dispatch(createNewBoard(payload));
       toast.success("Board created successfully");
-
       onCreateBoardSuccess();
    }
 

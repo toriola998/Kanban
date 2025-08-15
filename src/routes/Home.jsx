@@ -70,7 +70,7 @@ function App() {
                   deleteBoard={toggleShowDeleteBoard}
                />
 
-               <main className="bg-light-grey-1 min-h-screen px-4 py-6">
+               <main className="bg-light-grey-1 min-h-screen px-4 py-6 pt-24 md:pt-6 overflow-scroll">
                   <ColumnView
                      showEditBoard={toggleShowEditBoard}
                      handleShowTaskInfo={handleShowTaskInfo}

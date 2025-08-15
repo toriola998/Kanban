@@ -11,7 +11,7 @@ export default function TaskTitle({ item, index }) {
    ];
 
    return (
-      <p className="text-grey text-xs font-bold uppercase tracking-widest mb-6 flex-items gap-x-3">
+      <p className="text-grey text-xs font-bold uppercase tracking-widest mb-6 flex-items gap-x-3 w-[280px]">
          <span
             className="h-4 w-4 rounded-full block"
             style={{

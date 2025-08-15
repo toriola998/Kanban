@@ -6,7 +6,7 @@ export default function TaskCard({
 }) {
    return (
       <article
-         className="group bg-white px-4 py-6 card-shadow rounded-lg w-full md:w-[280px] font-bold cursor-pointer"
+         className="group bg-white px-4 py-6 card-shadow rounded-lg w-[280px] font-bold cursor-pointer"
          onClick={getTask}
       >
          <p className="text-[15px] group-hover:text-main-purple transition-colors duration-200">
