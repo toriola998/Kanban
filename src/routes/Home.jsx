@@ -19,13 +19,6 @@ function App() {
       (board) => board.name === activeBoardName,
    );
 
-   // const columns =
-   //    boards.find((item) => item.name === activeBoardName)?.columns || [];
-
-   // const completedTask = (arg) => {
-   //    return arg.filter((sub) => sub.isCompleted).length;
-   // };
-
    const [showAddTask, setShowAddTask] = useState(false);
    const [showTaskInfo, setShowTaskInfo] = useState(false);
    const [showEditTask, setShowEditTask] = useState(false);
@@ -42,9 +35,10 @@ function App() {
    const closeTaskInfo = () => setShowTaskInfo(false);
    const closeEditTask = () => setShowEditTask(false);
    const closeDeleteTask = () => setShowDeleteTask(false);
-   const closeAddTask = () => setShowAddTask(false);
-   const closeEditBoard = () => setShowEditBoard(false);
-   const closeDeleteBoard = () => setShowDeleteBoard(false);
+
+   const toggleShowAddTask = () => setShowAddTask((prev) => !prev);
+   const toggleShowEditBoard = () => setShowEditBoard((prev) => !prev);
+   const toggleShowDeleteBoard = () => setShowDeleteBoard((prev) => !prev);
 
    const handleEditTask = () => {
       setShowEditTask(true);
@@ -62,13 +56,9 @@ function App() {
    };
 
    const handleDeleteBoard = () => {
-      closeDeleteBoard();
+      toggleShowDeleteBoard();
       dispatch(deleteBoard());
    };
-
-   const handleShowAddTask = () => setShowAddTask(true);
-   const handleShowEditBoard = () => setShowEditBoard(true);
-   const handleShowDeleteBoard = () => setShowDeleteBoard(true);
 
    return (
       <>
@@ -76,14 +66,14 @@ function App() {
             <SideNav />
             <div className="w-full">
                <Header
-                  addTask={handleShowAddTask}
-                  editBoard={handleShowEditBoard}
-                  deleteBoard={handleShowDeleteBoard}
+                  addTask={toggleShowAddTask}
+                  editBoard={toggleShowEditBoard}
+                  deleteBoard={toggleShowDeleteBoard}
                />
 
                <main className="bg-light-grey-1 min-h-screen px-4 py-6">
                   <ColumnView
-                     showEditBoard={handleShowEditBoard}
+                     showEditBoard={toggleShowEditBoard}
                      handleShowTaskInfo={handleShowTaskInfo}
                   />
                </main>
@@ -114,22 +104,22 @@ function App() {
          )}
          {showAddTask && (
             <AddNewTask
-               handleClick={closeAddTask}
-               onAddTaskSuccess={closeAddTask}
+               handleClick={toggleShowAddTask}
+               onAddTaskSuccess={toggleShowAddTask}
             />
          )}
          {showEditBoard && (
             <EditBoard
-               handleClick={closeEditBoard}
-               onEditBoardSuccess={closeEditBoard}
+               handleClick={toggleShowEditBoard}
+               onEditBoardSuccess={toggleShowEditBoard}
             />
          )}
          {showDeleteBoard && (
             <DeleteItem
                action="board"
                title={activeBoardData?.name}
-               handleClick={closeDeleteBoard}
-               cancel={closeDeleteBoard}
+               handleClick={toggleShowDeleteBoard}
+               cancel={toggleShowDeleteBoard}
                deleteItem={handleDeleteBoard}
             />
          )}
