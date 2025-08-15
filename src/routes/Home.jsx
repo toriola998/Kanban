@@ -1,20 +1,14 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import {
-   setActiveTask,
-   deleteTask,
-   deleteBoard,
-   editBoard,
-} from "../redux/boardSlice";
+import { setActiveTask, deleteTask, deleteBoard } from "../redux/boardSlice";
 import Header from "../components/shared/Header";
 import SideNav from "../components/shared/SideNav";
-import TaskCard from "../components/tasks/TaskCard";
-import TaskTitle from "../components/tasks/TaskTitle";
 import TaskInfo from "../components/tasks/TaskInfo";
 import EditTask from "../components/tasks/EditTask";
 import AddNewTask from "../components/tasks/AddNewTask";
 import DeleteItem from "../components/shared/DeleteItem";
 import EditBoard from "../components/board/EditBoard";
+import ColumnView from "../components/board/ColumnView";
 
 function App() {
    const dispatch = useDispatch();
@@ -25,12 +19,12 @@ function App() {
       (board) => board.name === activeBoardName,
    );
 
-   const columns =
-      boards.find((item) => item.name === activeBoardName)?.columns || [];
+   // const columns =
+   //    boards.find((item) => item.name === activeBoardName)?.columns || [];
 
-   const completedTask = (arg) => {
-      return arg.filter((sub) => sub.isCompleted).length;
-   };
+   // const completedTask = (arg) => {
+   //    return arg.filter((sub) => sub.isCompleted).length;
+   // };
 
    const [showAddTask, setShowAddTask] = useState(false);
    const [showTaskInfo, setShowTaskInfo] = useState(false);
@@ -88,41 +82,10 @@ function App() {
                />
 
                <main className="bg-light-grey-1 min-h-screen px-4 py-6">
-                  <div className="flex gap-6">
-                     {columns.map((item, columnIndex) => (
-                        <div key={columnIndex} className="w-full md:w-[280px]">
-                           <TaskTitle item={item} index={columnIndex} />
-
-                           <div className="flex flex-col gap-y-6">
-                              {item.tasks?.map((task, taskId) => (
-                                 <TaskCard
-                                    key={taskId}
-                                    title={task.title}
-                                    completedSubtasks={completedTask(
-                                       task.subtasks,
-                                    )}
-                                    totalSubtasks={task.subtasks.length}
-                                    getTask={() =>
-                                       handleShowTaskInfo(
-                                          task,
-                                          columnIndex,
-                                          taskId,
-                                       )
-                                    }
-                                 />
-                              ))}
-                           </div>
-                        </div>
-                     ))}
-                     <div className="new-column flex-center mt-10 max-h-screen rounded-lg">
-                        <button
-                           className="text-grey font-bold text-xl md:text-2xl w-[260px]"
-                           onClick={handleShowEditBoard}
-                        >
-                           + New Column
-                        </button>
-                     </div>
-                  </div>
+                  <ColumnView
+                     showEditBoard={handleShowEditBoard}
+                     handleShowTaskInfo={handleShowTaskInfo}
+                  />
                </main>
             </div>
          </div>
