@@ -1,13 +1,17 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setActiveBoard } from "../../redux/boardSlice";
+import AddNewBoard from "../board/AddNewBoard";
 
 export default function BoardList({ children }) {
    const boards = useSelector((state) => state.boards.value);
-   const boardsList = boards.map((item) => item.name);
+   const boardNames = boards.map((item) => item.name);
 
    const dispatch = useDispatch();
    const activeBoard = useSelector((state) => state.boards.activeBoard);
+
+   const [showCreateBoard, setShowCreateBoard] = useState(false);
+   const toggleCreateBoard = () => setShowCreateBoard((prev) => !prev);
 
    return (
       <>
@@ -16,7 +20,7 @@ export default function BoardList({ children }) {
             <p className="text-xs text-grey font-bold mb-5">ALL BOARDS (3)</p>
          </div>
          <ul className="pr-6">
-            {boardsList.map((item, index) => (
+            {boardNames.map((item, index) => (
                <li key={index}>
                   <button
                      className={`text-grey list-item rounded-r-full cursor-pointer
@@ -35,9 +39,18 @@ export default function BoardList({ children }) {
                </li>
             ))}
          </ul>
-         <button className="text-main-purple list-item">
+         <button
+            className="text-main-purple list-item"
+            onClick={toggleCreateBoard}
+         >
             <img src="/assets/icon-board-purple.svg" alt="" />+ Create New Board
          </button>
+         {showCreateBoard && (
+            <AddNewBoard
+               handleClick={toggleCreateBoard}
+               onCreateBoardSuccess={toggleCreateBoard}
+            />
+         )}
       </>
    );
 }

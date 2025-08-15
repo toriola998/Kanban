@@ -91,7 +91,7 @@ function App() {
                            <TaskTitle item={item} index={columnIndex} />
 
                            <div className="flex flex-col gap-y-6">
-                              {item.tasks.map((task, taskId) => (
+                              {item.tasks?.map((task, taskId) => (
                                  <TaskCard
                                     key={taskId}
                                     title={task.title}

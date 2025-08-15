@@ -1,10 +1,15 @@
 import { useForm, useFieldArray } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useDispatch } from "react-redux";
+import { createNewBoard } from "../../redux/boardSlice";
 import TextInput from "../input-fields/TextInput";
-import ModalLayout from "../ModalLayout";
+import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
+import { toast } from "react-toastify";
 
-export default function AddNewBoard() {
+export default function AddNewBoard({ handleClick, onCreateBoardSuccess }) {
+   const dispatch = useDispatch();
+
    const {
       register,
       handleSubmit,
@@ -13,12 +18,12 @@ export default function AddNewBoard() {
    } = useForm({
       resolver: yupResolver(schemas.boardSchema),
       defaultValues: {
-         items: [{ column: "" }],
+         columns: [{ column: "" }],
       },
    });
 
    const { fields, append, remove } = useFieldArray({
-      name: "items",
+      name: "columns",
       control,
    });
 
@@ -27,13 +32,22 @@ export default function AddNewBoard() {
          column: "",
       });
    }
-
    async function onSubmit(formData) {
-      console.log(formData);
+      let payload = {
+         name: formData.boardName,
+         columns: formData.columns.map((item) => ({
+            name: item.column,
+            tasks: [],
+         })),
+      };
+      dispatch(createNewBoard(payload));
+      toast.success("Board created successfully");
+
+      onCreateBoardSuccess();
    }
 
    return (
-      <ModalLayout title="Add New Board">
+      <ModalLayout title="Add New Board" handleClick={handleClick}>
          <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-y-6 h-[300px] overflow-y-auto -mr-4 pr-4 modal-scroll"
@@ -58,9 +72,9 @@ export default function AddNewBoard() {
                            <TextInput
                               name="column"
                               placeholder="e.g. Make coffee"
-                              fieldName={register(`items.${index}.column`)}
+                              fieldName={register(`columns.${index}.column`)}
                               errorMessage={
-                                 errors?.items?.[index]?.column?.message
+                                 errors?.columns?.[index]?.column?.message
                               }
                            />
                            <button type="button" onClick={() => remove(index)}>

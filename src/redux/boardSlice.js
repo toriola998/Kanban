@@ -130,6 +130,11 @@ export const boardSlice = createSlice({
          activeBoardData.columns[columnIndex].tasks.splice(taskIndex, 1);
          state.activeTask = null;
       },
+      createNewBoard: (state, action) => {
+         const newBoard = action.payload;
+         state.value.push(newBoard);
+         console.log(state.value);
+      },
       deleteBoard: (state) => {
          const idx = state.value.findIndex(
             (board) => board.name === state.activeBoard,
@@ -151,6 +156,7 @@ export const {
    updateTaskInfo,
    deleteTask,
    addNewTask,
+   createNewBoard,
    deleteBoard,
 } = boardSlice.actions;
 
