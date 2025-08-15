@@ -12,10 +12,9 @@ import ColumnView from "../components/board/ColumnView";
 
 function App() {
    const dispatch = useDispatch();
-   const boards = useSelector((state) => state.boards.boardsList);
-   const activeBoardName = useSelector((state) => state.boards.activeBoard);
+   const { boardsList, activeBoardName } = useSelector((state) => state.boards);
 
-   const activeBoardData = boards.find(
+   const activeBoardData = boardsList.find(
       (board) => board.name === activeBoardName,
    );
 

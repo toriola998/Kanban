@@ -11,12 +11,12 @@ import schemas from "../../schema";
 
 export default function EditTask({ handleClick, onEditSuccess }) {
    const dispatch = useDispatch();
-   const { activeBoard, boardsList, activeTask } = useSelector(
+   const { activeBoardName, boardsList, activeTask } = useSelector(
       (state) => state.boards,
    );
 
    const activeBoardData = boardsList.find(
-      (board) => board.name === activeBoard,
+      (board) => board.name === activeBoardName,
    );
 
    const columnsList =

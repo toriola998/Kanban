@@ -7,12 +7,12 @@ export const boardSlice = createSlice({
    name: "boards",
    initialState: {
       boardsList: initialBoards,
-      activeBoard: initialBoards[0].name || "",
+      activeBoardName: initialBoards[0].name || "",
       activeTask: null, // { columnIndex, taskIndex }
    },
    reducers: {
       setActiveBoard: (state, action) => {
-         state.activeBoard = action.payload;
+         state.activeBoardName = action.payload;
       },
       setActiveTask: (state, action) => {
          state.activeTask = action.payload; // { columnIndex, taskIndex }
@@ -22,7 +22,7 @@ export const boardSlice = createSlice({
          if (typeof columnIndex !== "number") return;
 
          const activeBoardData = state.boardsList.find(
-            (board) => board.name === state.activeBoard,
+            (board) => board.name === state.activeBoardName,
          );
          if (!activeBoardData) return;
 
@@ -34,7 +34,7 @@ export const boardSlice = createSlice({
          const { columnIndex, taskIndex } = state.activeTask || {};
 
          const activeBoardData = state.boardsList.find(
-            (board) => board.name === state.activeBoard,
+            (board) => board.name === state.activeBoardName,
          );
 
          let subtask =
@@ -50,7 +50,7 @@ export const boardSlice = createSlice({
          const newStatus = action.payload;
 
          const activeBoardData = state.boardsList.find(
-            (board) => board.name === state.activeBoard,
+            (board) => board.name === state.activeBoardName,
          );
 
          if (!activeBoardData) return;
@@ -76,7 +76,7 @@ export const boardSlice = createSlice({
          const { columnIndex, taskIndex } = state.activeTask || {};
 
          const activeBoardData = state.boardsList.find(
-            (board) => board.name === state.activeBoard,
+            (board) => board.name === state.activeBoardName,
          );
          if (!activeBoardData) return;
 
@@ -123,7 +123,7 @@ export const boardSlice = createSlice({
          }
 
          const activeBoardData = state.boardsList.find(
-            (board) => board.name === state.activeBoard,
+            (board) => board.name === state.activeBoardName,
          );
          if (!activeBoardData) return;
 
@@ -146,8 +146,8 @@ export const boardSlice = createSlice({
          const board = state.boardsList[boardIndex];
          if (newBoardName && newBoardName !== boardName) {
             board.name = newBoardName;
-            if (state.activeBoard === boardName) {
-               state.activeBoard = newBoardName;
+            if (state.activeBoardName === boardName) {
+               state.activeBoardName = newBoardName;
             }
          }
 
@@ -176,12 +176,12 @@ export const boardSlice = createSlice({
 
       deleteBoard: (state) => {
          const idx = state.boardsList.findIndex(
-            (board) => board.name === state.activeBoard,
+            (board) => board.name === state.activeBoardName,
          );
 
          if (idx !== -1) {
             state.boardsList.splice(idx, 1);
-            state.activeBoard = state.boardsList[0].name;
+            state.activeBoardName = state.boardsList[0].name;
          }
       },
    },

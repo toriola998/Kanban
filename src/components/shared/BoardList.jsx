@@ -4,12 +4,10 @@ import { setActiveBoard } from "../../redux/boardSlice";
 import AddNewBoard from "../board/AddNewBoard";
 
 export default function BoardList({ children }) {
-   const boardsList = useSelector((state) => state.boards.boardsList);
+   const { boardsList, activeBoardName } = useSelector((state) => state.boards);
    const boardNames = boardsList.map((item) => item.name);
 
    const dispatch = useDispatch();
-   const activeBoard = useSelector((state) => state.boards.activeBoard);
-
    const [showCreateBoard, setShowCreateBoard] = useState(false);
    const toggleCreateBoard = () => setShowCreateBoard((prev) => !prev);
 
@@ -24,7 +22,7 @@ export default function BoardList({ children }) {
                <li key={index}>
                   <button
                      className={`text-grey list-item rounded-r-full cursor-pointer
-                        ${item === activeBoard ? "bg-main-purple text-white" : ""}`}
+                        ${item === activeBoardName ? "bg-main-purple text-white" : ""}`}
                      onClick={() => {
                         dispatch(setActiveBoard(item));
                      }}
@@ -32,7 +30,9 @@ export default function BoardList({ children }) {
                      <img
                         src="/assets/icon-board.svg"
                         alt=""
-                        className={item === activeBoard ? "active-board" : ""}
+                        className={
+                           item === activeBoardName ? "active-board" : ""
+                        }
                      />
                      {item}
                   </button>

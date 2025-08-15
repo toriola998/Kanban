@@ -9,14 +9,11 @@ import schemas from "../../schema";
 
 export default function EditBoard({ handleClick, onEditBoardSuccess }) {
    const dispatch = useDispatch();
-   const { activeBoard, boardsList } = useSelector((state) => state.boards);
+   const { activeBoardName, boardsList } = useSelector((state) => state.boards);
 
    const activeBoardData = boardsList.find(
-      (board) => board.name === activeBoard,
+      (board) => board.name === activeBoardName,
    );
-
-   const columnsList =
-      activeBoardData?.columns.map((column) => column.name) || [];
 
    const {
       register,
@@ -44,12 +41,12 @@ export default function EditBoard({ handleClick, onEditBoardSuccess }) {
    }
 
    function onSubmit(formData) {
-      const newBoardName = formData.boardName || activeBoard;
+      const newBoardName = formData.boardName || activeBoardName;
       const columnNames = formData.columns.map((item) => item.column);
 
       dispatch(
          editBoard({
-            boardName: activeBoard,
+            boardName: activeBoardName,
             newBoardName: newBoardName,
             updatedColumns: columnNames,
          }),
@@ -71,7 +68,7 @@ export default function EditBoard({ handleClick, onEditBoardSuccess }) {
                placeholder="e.g. Todo"
                fieldName={register("boardName")}
                errorMessage={errors.boardName?.message}
-               defaultValue={activeBoard}
+               defaultValue={activeBoardName}
             />
 
             <div>

@@ -12,10 +12,10 @@ import schemas from "../../schema";
 export default function AddNewTask({ onAddTaskSuccess, handleClick }) {
    const dispatch = useDispatch();
 
+   const { activeBoardName } = useSelector((state) => state.boards);
+
    const activeBoard = useSelector((state) =>
-      state.boards.boardsList.find(
-         (board) => board.name === state.boards.activeBoard,
-      ),
+      state.boards.boardsList.find((board) => board.name === activeBoardName),
    );
    const columnsList = activeBoard?.columns.map((column) => column.name) || [];
 
@@ -61,7 +61,6 @@ export default function AddNewTask({ onAddTaskSuccess, handleClick }) {
             columnIndex: columnsList.indexOf(formData.status.value),
          }),
       );
-      console.log(payload, activeBoard);
       toast.success("Task successfully created");
       onAddTaskSuccess();
    }

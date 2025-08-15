@@ -5,7 +5,7 @@ import DropdownMenu from "./DropdownMenu";
 
 export default function Header({ addTask, editBoard, deleteBoard }) {
    const [showMobileNav, setShowMobileNav] = useState(false);
-   const activeBoard = useSelector((state) => state.boards.activeBoard);
+   const activeBoardName = useSelector((state) => state.boards.activeBoardName);
 
    const headerStyle = `flex-items justify-between bg-white py-5 px-4 md:px-6 md:py-7
    border-b border-light-grey fixed top-0 z-90 right-0 left-0 md:relative`;
@@ -22,7 +22,7 @@ export default function Header({ addTask, editBoard, deleteBoard }) {
 
                <div className="flex-items gap-x-2">
                   <p className="text-black font-bold text-lg md:text-xl lg:text-2xl">
-                     {activeBoard}
+                     {activeBoardName}
                   </p>
                   <button onClick={() => setShowMobileNav((prev) => !prev)}>
                      <img
