@@ -21,10 +21,10 @@ const customStyles = {
          ? "1px solid #635fc7"
          : state.selectProps.error
            ? "1px solid red"
-           : "1px solid #828FA340", // Adjust border styles based on focus
-      boxShadow: state.isFocused ? "0 0 0 .1px #495057" : "none", // Add shadow when focused
+           : "1px solid #828FA340",
+      boxShadow: state.isFocused ? "0 0 0 .1px #495057" : "none",
       "&:hover": {
-         outlineColor: "#828FA340", // Change border color on hover
+         outlineColor: "#828FA340",
       },
    }),
 
@@ -36,7 +36,7 @@ const customStyles = {
       let color = "#828fa3";
 
       if (isSelected) {
-         backgroundColor = isDark ? "#2b2c37" : "#f4f7fd";
+         backgroundColor = isDark ? "#2b2c37" : "#635fc740";
          color = isDark ? "#fff" : "#635fc7";
       }
 
