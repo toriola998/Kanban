@@ -34,14 +34,10 @@ export default function BoardList({ children }) {
                   </button>
                </li>
             ))}
-
-            <li>
-               <button className="text-main-purple list-item">
-                  <img src="/assets/icon-board-purple.svg" alt="" />+ Create New
-                  Board
-               </button>
-            </li>
          </ul>
+         <button className="text-main-purple list-item">
+            <img src="/assets/icon-board-purple.svg" alt="" />+ Create New Board
+         </button>
       </>
    );
 }

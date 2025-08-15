@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import MobileNav from "./MobileNav";
+import DropdownMenu from "./DropdownMenu";
 
-export default function Header({ title, addTask, showMenu }) {
+export default function Header({ addTask, editBoard, deleteBoard }) {
    const [showMobileNav, setShowMobileNav] = useState(false);
    const activeBoard = useSelector((state) => state.boards.activeBoard);
 
@@ -42,9 +43,11 @@ export default function Header({ title, addTask, showMenu }) {
                   <span className="hidden md:block text-sm">Add New Task</span>
                </button>
 
-               <button>
-                  <img src="/assets/icon-vertical-ellipsis.svg" alt="" />
-               </button>
+               <DropdownMenu
+                  edit={editBoard}
+                  deleteItem={deleteBoard}
+                  actionType="Board"
+               />
             </div>
          </header>
          {showMobileNav && <MobileNav />}

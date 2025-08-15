@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveTask, deleteTask } from "../redux/boardSlice";
+import { setActiveTask, deleteTask, deleteBoard } from "../redux/boardSlice";
 import Header from "../components/shared/Header";
 import SideNav from "../components/shared/SideNav";
 import TaskCard from "../components/tasks/TaskCard";
@@ -9,14 +9,20 @@ import TaskInfo from "../components/tasks/TaskInfo";
 import EditTask from "../components/tasks/EditTask";
 import AddNewTask from "../components/tasks/AddNewTask";
 import DeleteItem from "../components/shared/DeleteItem";
+import EditBoard from "../components/board/EditBoard";
 
 function App() {
    const dispatch = useDispatch();
    const boards = useSelector((state) => state.boards.value);
-   const activeBoard = useSelector((state) => state.boards.activeBoard);
+   const activeBoardName = useSelector((state) => state.boards.activeBoard);
+
+   const activeBoardData = boards.find(
+      (board) => board.name === activeBoardName,
+   );
 
    const columns =
-      boards.find((item) => item.name === activeBoard)?.columns || [];
+      boards.find((item) => item.name === activeBoardName)?.columns || [];
+
    const completedTask = (arg) => {
       return arg.filter((sub) => sub.isCompleted).length;
    };
@@ -26,6 +32,8 @@ function App() {
    const [showEditTask, setShowEditTask] = useState(false);
    const [showDeleteTask, setShowDeleteTask] = useState(false);
    const [task, setTask] = useState(null);
+   const [showEditBoard, setShowEditBoard] = useState(false);
+   const [showDeleteBoard, setShowDeleteBoard] = useState(false);
 
    const handleShowTaskInfo = (task, columnIndex, taskIndex) => {
       setShowTaskInfo(true);
@@ -36,6 +44,8 @@ function App() {
    const closeEditTask = () => setShowEditTask(false);
    const closeDeleteTask = () => setShowDeleteTask(false);
    const closeAddTask = () => setShowAddTask(false);
+   const closeEditBoard = () => setShowEditBoard(false);
+   const closeDeleteBoard = () => setShowDeleteBoard(false);
 
    const handleEditTask = () => {
       setShowEditTask(true);
@@ -52,14 +62,27 @@ function App() {
       closeDeleteTask();
    };
 
+   const handleDeleteBoard = () => {
+      closeDeleteBoard();
+      dispatch(deleteBoard());
+   };
+
    const handleShowAddTask = () => setShowAddTask(true);
+   const handleShowEditBoard = () => {
+      setShowEditBoard(true);
+   };
+   const handleShowDeleteBoard = () => setShowDeleteBoard(true);
 
    return (
       <>
          <div className="flex w-full">
             <SideNav />
             <div className="w-full">
-               <Header addTask={handleShowAddTask} />
+               <Header
+                  addTask={handleShowAddTask}
+                  editBoard={handleShowEditBoard}
+                  deleteBoard={handleShowDeleteBoard}
+               />
 
                <main className="bg-light-grey-1 min-h-screen px-4 py-6">
                   <div className="flex gap-6">
@@ -119,6 +142,16 @@ function App() {
             <AddNewTask
                handleClick={closeAddTask}
                onAddTaskSuccess={closeAddTask}
+            />
+         )}
+         {showEditBoard && <EditBoard handleClick={closeEditBoard} />}
+         {showDeleteBoard && (
+            <DeleteItem
+               action="board"
+               title={activeBoardData?.name}
+               handleClick={closeDeleteBoard}
+               cancel={closeDeleteBoard}
+               deleteItem={handleDeleteBoard}
             />
          )}
       </>

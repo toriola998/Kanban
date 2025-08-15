@@ -1,10 +1,22 @@
 import { useForm, useFieldArray } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "../input-fields/TextInput";
-import ModalLayout from "../ModalLayout";
+import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
 
-export default function EditBoard() {
+export default function EditBoard({ handleClick }) {
+   const { activeBoard, value: boardList } = useSelector(
+      (state) => state.boards,
+   );
+
+   const activeBoardData = boardList.find(
+      (board) => board.name === activeBoard,
+   );
+
+   const columnsList =
+      activeBoardData?.columns.map((column) => column.name) || [];
+
    const {
       register,
       handleSubmit,
@@ -13,7 +25,9 @@ export default function EditBoard() {
    } = useForm({
       resolver: yupResolver(schemas.boardSchema),
       defaultValues: {
-         items: [{ column: "" }],
+         items: activeBoardData.columns.map((item) => ({
+            column: item.name || "",
+         })),
       },
    });
 
@@ -27,12 +41,13 @@ export default function EditBoard() {
          column: "",
       });
    }
+
    async function onSubmit(formData) {
       console.log(formData);
    }
 
    return (
-      <ModalLayout title="Add New Board">
+      <ModalLayout title="Edit Board" handleClick={handleClick}>
          <form
             onSubmit={handleSubmit(onSubmit)}
             className="flex flex-col gap-y-6 h-[300px] overflow-y-auto -mr-4 pr-4 modal-scroll"
@@ -43,6 +58,7 @@ export default function EditBoard() {
                placeholder="e.g. Todo"
                fieldName={register("boardName")}
                errorMessage={errors.boardName?.message}
+               defaultValue={activeBoard}
             />
 
             <div>
