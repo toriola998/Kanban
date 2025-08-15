@@ -1,4 +1,5 @@
 import Select, { components } from "react-select";
+import { useTheme } from "../../hooks/useTheme";
 
 const DropdownIndicator = (props) => {
    return (
@@ -12,6 +13,7 @@ const customStyles = {
    control: (provided, state) => ({
       ...provided,
       fontWeight: "500",
+      backgroundColor: "transparent",
       color: "#000112",
       padding: "2px 0",
       borderRadius: "6px",
@@ -26,26 +28,52 @@ const customStyles = {
       },
    }),
 
-   option: (provided, state) => ({
+   option: (provided, state) => {
+      const { isSelected, selectProps } = state;
+      const isDark = selectProps.isDark;
+
+      let backgroundColor = "transparent";
+      let color = "#828fa3";
+
+      if (isSelected) {
+         backgroundColor = isDark ? "#2b2c37" : "#f4f7fd";
+         color = isDark ? "#fff" : "#635fc7";
+      }
+
+      return {
+         ...provided,
+         backgroundColor,
+         color,
+         fontSize: "13px",
+         fontWeight: "500",
+         "&:hover": {
+            backgroundColor: isDark ? "#20212C" : "#f4f7fd",
+            color: isDark ? "" : "#635fc7",
+            cursor: "pointer",
+         },
+      };
+   },
+
+   menu: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? "#f4f7fd" : "transparent",
-      color: state.isSelected ? "#635fc7" : "#828fa3",
-      fontSize: "13px",
-      "&:hover": {
-         backgroundColor: "#f4f7fd",
-         color: "#635fc7",
-         cursor: "pointer",
-      },
+      backgroundColor: state.selectProps.isDark ? "#20212C" : "#ffffff", // Background for entire dropdown
    }),
 
-   singleValue: (provided) => ({
+   menuList: (provided, state) => ({
       ...provided,
-      fontSize: "13px",
+      backgroundColor: state.selectProps.isDark ? "#20212C" : "#ffffff", // Background for the scrollable list
    }),
 
-   placeholder: (provided) => ({
+   singleValue: (provided, state) => ({
       ...provided,
       fontSize: "13px",
+      color: state.selectProps.isDark ? "#ffffff" : "#000",
+   }),
+
+   placeholder: (provided, state) => ({
+      ...provided,
+      fontSize: "13px",
+      color: state.selectProps.isDark ? "#ffffff" : "#000",
    }),
 };
 
@@ -62,6 +90,7 @@ export default function SelectInput({
    const toOptions = (list) =>
       list.map((item) => ({ label: item, value: item }));
 
+   const { isDarkMode } = useTheme();
    return (
       <div className="relative">
          <label className={`label  ${errorMessage ? "text-red" : "text-grey"}`}>
@@ -75,6 +104,7 @@ export default function SelectInput({
             styles={customStyles}
             onChange={handleChange}
             error={errorMessage}
+            isDark={isDarkMode}
          />
          <p className="text-red text-xs font-medium flex justify-end">
             {errorMessage}
