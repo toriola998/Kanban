@@ -68,9 +68,7 @@ function App() {
    };
 
    const handleShowAddTask = () => setShowAddTask(true);
-   const handleShowEditBoard = () => {
-      setShowEditBoard(true);
-   };
+   const handleShowEditBoard = () => setShowEditBoard(true);
    const handleShowDeleteBoard = () => setShowDeleteBoard(true);
 
    return (
@@ -144,7 +142,12 @@ function App() {
                onAddTaskSuccess={closeAddTask}
             />
          )}
-         {showEditBoard && <EditBoard handleClick={closeEditBoard} />}
+         {showEditBoard && (
+            <EditBoard
+               handleClick={closeEditBoard}
+               onEditBoardSuccess={closeEditBoard}
+            />
+         )}
          {showDeleteBoard && (
             <DeleteItem
                action="board"

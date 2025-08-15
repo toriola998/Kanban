@@ -1,11 +1,14 @@
 import { useForm, useFieldArray } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { toast } from "react-toastify";
+import { editBoard } from "../../redux/boardSlice";
 import TextInput from "../input-fields/TextInput";
 import ModalLayout from "../shared/ModalLayout";
 import schemas from "../../schema";
 
-export default function EditBoard({ handleClick }) {
+export default function EditBoard({ handleClick, onEditBoardSuccess }) {
+   const dispatch = useDispatch();
    const { activeBoard, value: boardList } = useSelector(
       (state) => state.boards,
    );
@@ -25,14 +28,14 @@ export default function EditBoard({ handleClick }) {
    } = useForm({
       resolver: yupResolver(schemas.boardSchema),
       defaultValues: {
-         items: activeBoardData.columns.map((item) => ({
+         columns: activeBoardData.columns.map((item) => ({
             column: item.name || "",
          })),
       },
    });
 
    const { fields, append, remove } = useFieldArray({
-      name: "items",
+      name: "columns",
       control,
    });
 
@@ -42,8 +45,20 @@ export default function EditBoard({ handleClick }) {
       });
    }
 
-   async function onSubmit(formData) {
-      console.log(formData);
+   function onSubmit(formData) {
+      const newBoardName = formData.boardName || activeBoard;
+      const columnNames = formData.columns.map((item) => item.column);
+
+      dispatch(
+         editBoard({
+            boardName: activeBoard,
+            newBoardName: newBoardName,
+            updatedColumns: columnNames,
+         }),
+      );
+
+      toast.success("Board updated successfully");
+      onEditBoardSuccess();
    }
 
    return (
@@ -73,9 +88,9 @@ export default function EditBoard({ handleClick }) {
                            <TextInput
                               name="column"
                               placeholder="e.g. Make coffee"
-                              fieldName={register(`items.${index}.column`)}
+                              fieldName={register(`columns.${index}.column`)}
                               errorMessage={
-                                 errors?.items?.[index]?.column?.message
+                                 errors?.columns?.[index]?.column?.message
                               }
                            />
                            <button type="button" onClick={() => remove(index)}>

@@ -135,6 +135,43 @@ export const boardSlice = createSlice({
          state.value.push(newBoard);
          console.log(state.value);
       },
+      editBoard: (state, action) => {
+         const { boardName, newBoardName, updatedColumns } = action.payload;
+
+         const boardIndex = state.value.findIndex((b) => b.name === boardName);
+         if (boardIndex === -1) return; // board not found
+
+         const board = state.value[boardIndex];
+         if (newBoardName && newBoardName !== boardName) {
+            board.name = newBoardName;
+            if (state.activeBoard === boardName) {
+               state.activeBoard = newBoardName;
+            }
+         }
+
+         // Update columns - this will remove columns that aren't in updatedColumns
+         board.columns = updatedColumns.map((columnName, index) => {
+            // Find existing column to preserve tasks
+            const existingColumn = board.columns?.find(
+               (col) => col.name === columnName,
+            );
+
+            if (existingColumn) {
+               // Keep existing column but update name if changed
+               return {
+                  ...existingColumn,
+                  name: columnName,
+               };
+            } else {
+               // Create new column
+               return {
+                  name: columnName,
+                  tasks: [],
+               };
+            }
+         });
+      },
+
       deleteBoard: (state) => {
          const idx = state.value.findIndex(
             (board) => board.name === state.activeBoard,
@@ -158,6 +195,7 @@ export const {
    addNewTask,
    createNewBoard,
    deleteBoard,
+   editBoard,
 } = boardSlice.actions;
 
 export default boardSlice.reducer;
