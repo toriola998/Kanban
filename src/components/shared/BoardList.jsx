@@ -15,13 +15,15 @@ export default function BoardList({ children }) {
       <>
          <div className="px-8 pt-8 w-[inherit]">
             {children}
-            <p className="text-xs text-grey font-bold mb-5">ALL BOARDS (3)</p>
+            <p className="text-xs text-grey font-bold mb-5">
+               ALL BOARDS ({boardNames?.length})
+            </p>
          </div>
          <ul className="pr-6">
             {boardNames.map((item, index) => (
                <li key={index}>
                   <button
-                     className={`board-btn
+                     className={`board-btn truncate w-32
                         ${item === activeBoardName ? "bg-main-purple text-white" : "text-grey"}`}
                      onClick={() => {
                         dispatch(setActiveBoard(item));

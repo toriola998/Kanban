@@ -8,9 +8,11 @@ export default function DropdownMenu({ actionType, edit, deleteItem }) {
       <div className="relative">
          <Menu>
             <MenuButton className="outline-none">
-               <button>
-                  <img src="/assets/icon-vertical-ellipsis.svg" alt="" />
-               </button>
+               <img
+                  src="/assets/icon-vertical-ellipsis.svg"
+                  alt=""
+                  className="cursor-pointer"
+               />
             </MenuButton>
             <MenuItems className="absolute rounded-lg z-50 bg-white right-0 top-10 w-[170px] flex flex-col shadow-lg outline-none">
                <MenuItem>

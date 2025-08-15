@@ -11,7 +11,7 @@ export default function Header({ addTask, editBoard, deleteBoard }) {
       boardsList.find((item) => item.name === activeBoardName)?.columns || [];
 
    const headerStyle = `flex-items justify-between bg-white py-5 px-4 md:px-6 md:py-7
-   border-b border-light-grey fixed top-0 z-90 right-0 left-0 md:relative`;
+   border-b border-light-grey fixed top-0 z-90 right-0 left-0 md:left-[300px]`;
 
    return (
       <>

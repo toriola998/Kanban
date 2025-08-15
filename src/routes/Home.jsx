@@ -63,7 +63,7 @@ function App() {
       <>
          <div className="flex w-full">
             <SideNav />
-            <div className="w-full">
+            <div className="w-full relative">
                <Header
                   addTask={toggleShowAddTask}
                   editBoard={toggleShowEditBoard}
