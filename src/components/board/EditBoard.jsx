@@ -9,11 +9,9 @@ import schemas from "../../schema";
 
 export default function EditBoard({ handleClick, onEditBoardSuccess }) {
    const dispatch = useDispatch();
-   const { activeBoard, value: boardList } = useSelector(
-      (state) => state.boards,
-   );
+   const { activeBoard, boardsList } = useSelector((state) => state.boards);
 
-   const activeBoardData = boardList.find(
+   const activeBoardData = boardsList.find(
       (board) => board.name === activeBoard,
    );
 

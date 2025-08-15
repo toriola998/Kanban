@@ -11,13 +11,11 @@ import schemas from "../../schema";
 
 export default function EditTask({ handleClick, onEditSuccess }) {
    const dispatch = useDispatch();
-   const {
-      activeBoard,
-      value: boardList,
-      activeTask,
-   } = useSelector((state) => state.boards);
+   const { activeBoard, boardsList, activeTask } = useSelector(
+      (state) => state.boards,
+   );
 
-   const activeBoardData = boardList.find(
+   const activeBoardData = boardsList.find(
       (board) => board.name === activeBoard,
    );
 
@@ -65,7 +63,6 @@ export default function EditTask({ handleClick, onEditSuccess }) {
          title: formData.title,
          description: formData.description,
          status: formData.status.value,
-         //subtasks: formData.subtasks,
          subtasks: formData.subtasks.map((item) => ({
             title: item.task, // or item if it's just a string
             isCompleted: item.isCompleted,

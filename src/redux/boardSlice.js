@@ -6,7 +6,7 @@ const initialBoards = [...data.boards];
 export const boardSlice = createSlice({
    name: "boards",
    initialState: {
-      value: initialBoards,
+      boardsList: initialBoards,
       activeBoard: initialBoards[0].name || "",
       activeTask: null, // { columnIndex, taskIndex }
    },
@@ -21,7 +21,7 @@ export const boardSlice = createSlice({
          const { newTask, columnIndex } = action.payload;
          if (typeof columnIndex !== "number") return;
 
-         const activeBoardData = state.value.find(
+         const activeBoardData = state.boardsList.find(
             (board) => board.name === state.activeBoard,
          );
          if (!activeBoardData) return;
@@ -33,7 +33,7 @@ export const boardSlice = createSlice({
          const { subtaskIndex } = action.payload;
          const { columnIndex, taskIndex } = state.activeTask || {};
 
-         const activeBoardData = state.value.find(
+         const activeBoardData = state.boardsList.find(
             (board) => board.name === state.activeBoard,
          );
 
@@ -49,7 +49,7 @@ export const boardSlice = createSlice({
          const { columnIndex, taskIndex } = state.activeTask || {};
          const newStatus = action.payload;
 
-         const activeBoardData = state.value.find(
+         const activeBoardData = state.boardsList.find(
             (board) => board.name === state.activeBoard,
          );
 
@@ -75,7 +75,7 @@ export const boardSlice = createSlice({
          const updatedFields = action.payload;
          const { columnIndex, taskIndex } = state.activeTask || {};
 
-         const activeBoardData = state.value.find(
+         const activeBoardData = state.boardsList.find(
             (board) => board.name === state.activeBoard,
          );
          if (!activeBoardData) return;
@@ -122,7 +122,7 @@ export const boardSlice = createSlice({
             return;
          }
 
-         const activeBoardData = state.value.find(
+         const activeBoardData = state.boardsList.find(
             (board) => board.name === state.activeBoard,
          );
          if (!activeBoardData) return;
@@ -132,16 +132,18 @@ export const boardSlice = createSlice({
       },
       createNewBoard: (state, action) => {
          const newBoard = action.payload;
-         state.value.push(newBoard);
-         console.log(state.value);
+         state.boardsList.push(newBoard);
+         console.log(state.boardsList);
       },
       editBoard: (state, action) => {
          const { boardName, newBoardName, updatedColumns } = action.payload;
 
-         const boardIndex = state.value.findIndex((b) => b.name === boardName);
+         const boardIndex = state.boardsList.findIndex(
+            (b) => b.name === boardName,
+         );
          if (boardIndex === -1) return; // board not found
 
-         const board = state.value[boardIndex];
+         const board = state.boardsList[boardIndex];
          if (newBoardName && newBoardName !== boardName) {
             board.name = newBoardName;
             if (state.activeBoard === boardName) {
@@ -173,13 +175,13 @@ export const boardSlice = createSlice({
       },
 
       deleteBoard: (state) => {
-         const idx = state.value.findIndex(
+         const idx = state.boardsList.findIndex(
             (board) => board.name === state.activeBoard,
          );
 
          if (idx !== -1) {
-            state.value.splice(idx, 1);
-            state.activeBoard = state.value[0].name;
+            state.boardsList.splice(idx, 1);
+            state.activeBoard = state.boardsList[0].name;
          }
       },
    },

@@ -3,7 +3,7 @@ import TaskCard from "../tasks/TaskCard";
 import TaskTitle from "../tasks/TaskTitle";
 
 export default function ColumnView({ showEditBoard, handleShowTaskInfo }) {
-   const boards = useSelector((state) => state.boards.value);
+   const boards = useSelector((state) => state.boards.boardsList);
    const activeBoardName = useSelector((state) => state.boards.activeBoard);
 
    // const activeBoardData = boards.find(

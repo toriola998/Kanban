@@ -13,13 +13,11 @@ export default function TaskInfo({
 }) {
    const dispatch = useDispatch();
 
-   const {
-      activeBoard,
-      value: boardList,
-      activeTask,
-   } = useSelector((state) => state.boards);
+   const { activeBoard, boardsList, activeTask } = useSelector(
+      (state) => state.boards,
+   );
 
-   const activeBoardData = boardList.find(
+   const activeBoardData = boardsList.find(
       (board) => board.name === activeBoard,
    );
    const columnsList =

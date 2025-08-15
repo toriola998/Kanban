@@ -13,7 +13,7 @@ export default function AddNewTask({ onAddTaskSuccess, handleClick }) {
    const dispatch = useDispatch();
 
    const activeBoard = useSelector((state) =>
-      state.boards.value.find(
+      state.boards.boardsList.find(
          (board) => board.name === state.boards.activeBoard,
       ),
    );

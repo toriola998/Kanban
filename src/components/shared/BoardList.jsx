@@ -4,8 +4,8 @@ import { setActiveBoard } from "../../redux/boardSlice";
 import AddNewBoard from "../board/AddNewBoard";
 
 export default function BoardList({ children }) {
-   const boards = useSelector((state) => state.boards.value);
-   const boardNames = boards.map((item) => item.name);
+   const boardsList = useSelector((state) => state.boards.boardsList);
+   const boardNames = boardsList.map((item) => item.name);
 
    const dispatch = useDispatch();
    const activeBoard = useSelector((state) => state.boards.activeBoard);
