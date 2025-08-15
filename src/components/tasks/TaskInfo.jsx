@@ -47,7 +47,7 @@ export default function TaskInfo({
    return (
       <ModalLayout handleClick={handleClick}>
          <div className="grid grid-cols-[90%_auto] justify-between">
-            <h1 className="text-black-1 font-bold text-lg leading-6">
+            <h1 className="text-black-1 dark:text-white font-bold text-lg leading-6">
                {task.title}
             </h1>
             <DropdownMenu
@@ -60,14 +60,14 @@ export default function TaskInfo({
          <p className="my-6 text-[13px] font-medium text-grey leading-6">
             {task.description}
          </p>
-         <p className="font-bold text-xs text-grey mb-4">
+         <p className="font-bold text-xs text-grey dark:text-white mb-4">
             Subtasks ({completedCount} of {task.subtasks.length})
          </p>
 
          <div className="mb-6 flex flex-col gap-y-2">
             {task.subtasks.map((item, index) => (
                <div
-                  className="bg-light-grey-1 rounded p-3 hover:bg-grey-4 cursor-pointer"
+                  className="bg-light-grey-1 dark:bg-dark-grey rounded p-3 hover:bg-grey-4 cursor-pointer"
                   key={index}
                >
                   <label
@@ -88,7 +88,7 @@ export default function TaskInfo({
                            )
                         }
                      />
-                     <span className="text-xs font-bold text-black-1 peer-checked:line-through peer-checked:opacity-50">
+                     <span className="text-xs font-bold text-black-1 dark:text-white peer-checked:line-through peer-checked:opacity-50">
                         {item.title}
                      </span>
                   </label>

@@ -28,7 +28,7 @@ const customStyles = {
 
    option: (provided, state) => ({
       ...provided,
-      backgroundColor: state.isSelected ? "#f4f7fd" : "white",
+      backgroundColor: state.isSelected ? "#f4f7fd" : "transparent",
       color: state.isSelected ? "#635fc7" : "#828fa3",
       fontSize: "13px",
       "&:hover": {
@@ -64,11 +64,7 @@ export default function SelectInput({
 
    return (
       <div className="relative">
-         <label
-            className={`text-xs mb-1 inline-flex font-bold  ${
-               errorMessage ? "text-red" : "text-grey"
-            }`}
-         >
+         <label className={`label  ${errorMessage ? "text-red" : "text-grey"}`}>
             {label}
          </label>
 

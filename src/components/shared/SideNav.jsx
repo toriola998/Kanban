@@ -2,9 +2,12 @@ import BoardList from "./BoardList";
 import ToggleTheme from "./ToggleTheme";
 
 export default function SideNav() {
+   const navBar = `min-h-screen fixed w-[300px] border-r border-light-grey
+   dark:border-dark-grey-2 hidden md:block z-[100] bg-white dark:bg-dark-grey-1`;
+
    return (
       <nav>
-         <div className="min-h-screen fixed w-[300px] border-r border-light-grey hidden md:block z-[100] bg-white">
+         <div className={navBar}>
             <BoardList>
                <img src="/assets/logo-dark.svg" alt="" className="mb-14" />
             </BoardList>

@@ -14,7 +14,7 @@ export default function DropdownMenu({ actionType, edit, deleteItem }) {
                   className="cursor-pointer"
                />
             </MenuButton>
-            <MenuItems className="absolute rounded-lg z-50 bg-white right-0 top-10 w-[170px] flex flex-col shadow-lg outline-none">
+            <MenuItems className="absolute rounded-lg z-50 bg-white dark:bg-dark-grey right-0 top-10 w-[170px] flex flex-col shadow-lg outline-none">
                <MenuItem>
                   <button onClick={edit} className={`text-grey ${menuItem}`}>
                      Edit {actionType}

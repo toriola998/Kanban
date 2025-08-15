@@ -10,7 +10,7 @@ button {
    }
 
    &.sec-btn {
-      @apply bg-grey-3 text-main-purple text-[13px] hover:bg-grey-4;
+      @apply bg-grey-3 dark:bg-white dark:hover:bg-white text-main-purple text-[13px] hover:bg-grey-4;
    }
 
    &.red {
@@ -24,7 +24,7 @@ button {
 
 .board-btn {
    @apply rounded-r-full hover:bg-grey-3 hover:text-main-purple
-   font-bold text-[15px] py-4 px-8 flex items-center gap-x-4 w-full;
+   font-bold text-[15px] py-4 px-8 flex items-center gap-x-4 w-full dark:hover:bg-white;
    transition: all 0.2s ease;
 
    & > img {

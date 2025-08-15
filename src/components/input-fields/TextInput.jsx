@@ -31,16 +31,14 @@ export default function TextInput({
          {label && (
             <label
                htmlFor={name}
-               className={`text-xs mb-1 inline-flex font-bold ${
-                  errorMessage ? "text-red" : "text-grey"
-               }`}
+               className={`label ${errorMessage ? "text-red" : "text-grey"}`}
             >
                {label}
             </label>
          )}
 
          <div
-            className={`input-wrapper
+            className={`input-wrapper bg-transparent
                ${errorMessage ? "border-red" : "border-grey-2"}
                ${isDisabled ? "bg-grey-2" : "border-grey-2"}
             `}

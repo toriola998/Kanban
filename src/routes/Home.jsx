@@ -59,6 +59,9 @@ function App() {
       dispatch(deleteBoard());
    };
 
+   const pageWrapper = `hide-scrollbar overflow-scroll bg-light-grey-1
+   dark:bg-dark-grey min-h-screen px-4 py-6 pt-24 md:pt-6 relative md:pl-[320px]`;
+
    return (
       <>
          <div className="flex w-full">
@@ -70,7 +73,7 @@ function App() {
                   deleteBoard={toggleShowDeleteBoard}
                />
 
-               <main className="hide-scrollbar overflow-scroll bg-light-grey-1 min-h-screen px-4 py-6 pt-24 md:pt-6 relative md:pl-[320px]">
+               <main className={pageWrapper}>
                   <ColumnView
                      showEditBoard={toggleShowEditBoard}
                      handleShowTaskInfo={handleShowTaskInfo}

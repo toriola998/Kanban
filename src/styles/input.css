@@ -21,7 +21,10 @@ input[type="number"] {
 textarea {
    @apply border;
    &::placeholder {
-      @apply text-black-1 font-medium opacity-25 text-sm;
+      @apply text-black-1 dark:text-white font-medium opacity-25 text-sm;
+   }
+   .dark &::placeholder {
+      @apply text-white;
    }
 
    &:focus {
@@ -32,8 +35,16 @@ textarea {
 .input-wrapper {
    @apply border flex items-center w-full rounded-lg;
 
+   input {
+      @apply dark:text-white;
+   }
+
    input::placeholder {
       @apply text-black-1 font-medium opacity-25 text-sm;
+   }
+
+   .dark & input::placeholder {
+      @apply text-white;
    }
 
    &:focus-within {
@@ -42,7 +53,7 @@ textarea {
 }
 
 .label {
-   @apply text-xs mb-1 inline-flex font-bold;
+   @apply text-xs mb-1 inline-flex font-bold dark:text-white;
 }
 
 .custom-file-input::-webkit-file-upload-button,

@@ -11,9 +11,7 @@ export default function TextAreaInput({
       <div className="relative ">
          <label
             htmlFor={name}
-            className={`text-xs mb-1 inline-flex font-bold ${
-               errorMessage ? "text-red" : "text-grey"
-            }`}
+            className={`label ${errorMessage ? "text-red" : "text-grey"}`}
          >
             {label}
          </label>
