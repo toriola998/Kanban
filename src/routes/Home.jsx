@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { setActiveTask, deleteTask, deleteBoard } from "../redux/boardSlice";
+import {
+   setActiveTask,
+   deleteTask,
+   deleteBoard,
+   editBoard,
+} from "../redux/boardSlice";
 import Header from "../components/shared/Header";
 import SideNav from "../components/shared/SideNav";
 import TaskCard from "../components/tasks/TaskCard";
@@ -109,6 +114,14 @@ function App() {
                            </div>
                         </div>
                      ))}
+                     <div className="new-column flex-center mt-10 max-h-screen rounded-lg">
+                        <button
+                           className="text-grey font-bold text-xl md:text-2xl w-[260px]"
+                           onClick={handleShowEditBoard}
+                        >
+                           + New Column
+                        </button>
+                     </div>
                   </div>
                </main>
             </div>

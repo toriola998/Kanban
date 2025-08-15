@@ -52,3 +52,11 @@
 .active-board {
    filter: brightness(200%) contrast(150%);
 }
+
+.new-column {
+   background: linear-gradient(
+      180deg,
+      #e9effa 0%,
+      rgba(233, 239, 250, 0.5) 100%
+   );
+}
