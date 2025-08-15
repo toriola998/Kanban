@@ -38,3 +38,23 @@
 .modal-scroll::-webkit-scrollbar-thumb:hover {
    background: #a8a4ff;
 }
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.hide-scrollbar::-webkit-scrollbar {
+   display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.hide-scrollbar {
+   -ms-overflow-style: none; /* IE and Edge */
+   scrollbar-width: none; /* Firefox */
+}
+
+.hide-scrollbar {
+   scrollbar-width: none;
+   -ms-overflow-style: none;
+}
+.hide-scrollbar::-webkit-scrollbar {
+   width: 0px;
+   background: transparent;
+}

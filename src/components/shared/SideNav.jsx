@@ -11,10 +11,10 @@ export default function SideNav() {
 
             <div className="pr-6 w-full absolute bottom-10">
                <ToggleTheme />
-               <button className="text-grey hover:text-main-purple hover:bg-grey-3 rounded-r-full mt-1 list-item">
+               {/* <button className="text-grey hover:text-main-purple hover:bg-grey-3 rounded-r-full mt-1 list-item">
                   <img src="/assets/icon-hide-sidebar.svg" alt="" />
                   Hide SideBar
-               </button>
+               </button> */}
             </div>
          </div>
       </nav>
