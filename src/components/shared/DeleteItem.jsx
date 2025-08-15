@@ -9,7 +9,11 @@ export default function DeleteItem({ action, title, deleteItem, cancel }) {
    };
 
    return (
-      <ModalLayout titleColor="red" title={`Delete this ${action}?`}>
+      <ModalLayout
+         titleColor="red"
+         title={`Delete this ${action}?`}
+         handleClick={cancel}
+      >
          <p className="text-[13px] text-grey font-medium leading-7">
             {getNote()}
          </p>

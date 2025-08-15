@@ -1,3 +1,7 @@
+button {
+   cursor: pointer;
+}
+
 .btn {
    @apply flex items-center justify-center rounded-full font-bold py-3 cursor-pointer;
 
@@ -11,5 +15,24 @@
 
    &.red {
       @apply bg-red text-white text-[13px] hover:bg-red-1;
+   }
+}
+
+.list-item {
+   @apply font-bold text-[15px] py-4 px-8 flex items-center gap-x-4 w-full;
+}
+
+.board-btn {
+   @apply rounded-r-full hover:bg-grey-3 hover:text-main-purple
+   font-bold text-[15px] py-4 px-8 flex items-center gap-x-4 w-full;
+   transition: all 0.2s ease;
+
+   & > img {
+      transition: filter 0.2s ease;
+   }
+
+   &:hover > img {
+      filter: brightness(0) saturate(100%) invert(27%) sepia(51%)
+         saturate(2878%) hue-rotate(230deg) brightness(104%) contrast(97%);
    }
 }

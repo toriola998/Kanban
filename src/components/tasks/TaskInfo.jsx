@@ -66,15 +66,18 @@ export default function TaskInfo({
 
          <div className="mb-6 flex flex-col gap-y-2">
             {task.subtasks.map((item, index) => (
-               <div className="bg-light-grey-1 rounded p-3" key={index}>
+               <div
+                  className="bg-light-grey-1 rounded p-3 hover:bg-grey-4 cursor-pointer"
+                  key={index}
+               >
                   <label
                      htmlFor={`subtask-${index}`}
-                     className="grid grid-cols-[16px_auto] gap-x-6 items-center"
+                     className="grid grid-cols-[16px_auto] gap-x-6 items-center cursor-pointer"
                   >
                      <input
                         id={`subtask-${index}`}
                         name={index}
-                        className="peer accent-main-purple h-4 w-4"
+                        className="peer accent-main-purple h-4 w-4 "
                         checked={item.isCompleted}
                         type="checkbox"
                         onChange={() =>

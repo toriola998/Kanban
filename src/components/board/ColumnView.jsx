@@ -8,7 +8,6 @@ export default function ColumnView({ showEditBoard, handleShowTaskInfo }) {
 
    const columns =
       boardsList.find((item) => item.name === activeBoardName)?.columns || [];
-   console.log(columns);
 
    const completedTask = (arg) => {
       return arg.filter((sub) => sub.isCompleted).length;
@@ -17,7 +16,7 @@ export default function ColumnView({ showEditBoard, handleShowTaskInfo }) {
    return (
       <>
          {columns.length === 0 ? (
-            <EmptyColumn />
+            <EmptyColumn addColumn={showEditBoard} />
          ) : (
             <div className="flex gap-6">
                {columns.map((item, columnIndex) => (
@@ -41,7 +40,7 @@ export default function ColumnView({ showEditBoard, handleShowTaskInfo }) {
                ))}
                <div className="new-column flex-center mt-10 h-screen rounded-lg">
                   <button
-                     className="text-grey font-bold text-xl md:text-2xl w-[260px]"
+                     className="text-grey font-bold text-xl md:text-2xl w-[260px] hover:text-main-purple"
                      onClick={showEditBoard}
                   >
                      + New Column

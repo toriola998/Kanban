@@ -21,8 +21,8 @@ export default function BoardList({ children }) {
             {boardNames.map((item, index) => (
                <li key={index}>
                   <button
-                     className={`text-grey list-item rounded-r-full cursor-pointer
-                        ${item === activeBoardName ? "bg-main-purple text-white" : ""}`}
+                     className={`board-btn
+                        ${item === activeBoardName ? "bg-main-purple text-white" : "text-grey"}`}
                      onClick={() => {
                         dispatch(setActiveBoard(item));
                      }}
@@ -30,9 +30,7 @@ export default function BoardList({ children }) {
                      <img
                         src="/assets/icon-board.svg"
                         alt=""
-                        className={
-                           item === activeBoardName ? "active-board" : ""
-                        }
+                        className={`board-icon ${item === activeBoardName ? "active-board" : ""}`}
                      />
                      {item}
                   </button>
