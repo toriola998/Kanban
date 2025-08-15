@@ -18,7 +18,7 @@ export default function ColumnView({ showEditBoard, handleShowTaskInfo }) {
          {columns.length === 0 ? (
             <EmptyColumn addColumn={showEditBoard} />
          ) : (
-            <div className="flex gap-6">
+            <div className="flex gap-6 md:mt-24">
                {columns.map((item, columnIndex) => (
                   <div key={columnIndex} className="w-full md:w-[280px]">
                      <TaskTitle item={item} index={columnIndex} />
