@@ -10,11 +10,12 @@ import schemas from "../../schema";
 export default function EditBoard({ handleClick, onEditBoardSuccess }) {
    const dispatch = useDispatch();
    const { activeBoardName, boardsList } = useSelector((state) => state.boards);
+   const boardNames = boardsList.map((item) => item.name);
 
    const activeBoardData = boardsList.find(
       (board) => board.name === activeBoardName,
    );
-
+   
    const {
       register,
       handleSubmit,
@@ -42,16 +43,37 @@ export default function EditBoard({ handleClick, onEditBoardSuccess }) {
 
    function onSubmit(formData) {
       const newBoardName = formData.boardName || activeBoardName;
-      const columnNames = formData.columns.map((item) => item.column);
 
+      // Filter out empty columns and get column names
+      const filteredColumns = formData.columns
+         .filter((item) => item.column && item.column.trim() !== "")
+         .map((item) => item.column.trim());
+
+      const lowerCaseNames = filteredColumns.map((name) => name.toLowerCase());
+      const uniqueNames = new Set(lowerCaseNames);
+
+      if (lowerCaseNames.length !== uniqueNames.size) {
+         toast.error("Column names must be unique");
+         return;
+      }
+
+      // Check if board name already exists (only if changing the name)
+      if (newBoardName !== activeBoardName) {
+         const isNameExist = boardNames.find(
+            (item) => item.toLowerCase() === newBoardName.toLowerCase(),
+         );
+         if (isNameExist) {
+            toast.error("Board name already exists");
+            return;
+         }
+      }
       dispatch(
          editBoard({
             boardName: activeBoardName,
             newBoardName: newBoardName,
-            updatedColumns: columnNames,
+            updatedColumns: filteredColumns,
          }),
       );
-
       toast.success("Board updated successfully");
       onEditBoardSuccess();
    }
