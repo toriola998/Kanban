@@ -49,7 +49,7 @@ export default function AddNewTask({ onAddTaskSuccess, handleClick }) {
          title: formData.title,
          description: formData.description,
          status: formData.status.value,
-         subtasks: formData.subtasks.map((item) => ({
+         subtasks: formData.subtasks?.map((item) => ({
             title: item.task, // or item if it's just a string
             isCompleted: false,
          })),

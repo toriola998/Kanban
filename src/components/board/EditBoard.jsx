@@ -15,7 +15,7 @@ export default function EditBoard({ handleClick, onEditBoardSuccess }) {
    const activeBoardData = boardsList.find(
       (board) => board.name === activeBoardName,
    );
-   
+
    const {
       register,
       handleSubmit,
@@ -24,7 +24,7 @@ export default function EditBoard({ handleClick, onEditBoardSuccess }) {
    } = useForm({
       resolver: yupResolver(schemas.boardSchema),
       defaultValues: {
-         columns: activeBoardData.columns.map((item) => ({
+         columns: activeBoardData.columns?.map((item) => ({
             column: item.name || "",
          })),
       },

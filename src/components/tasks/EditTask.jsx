@@ -39,7 +39,7 @@ export default function EditTask({ handleClick, onEditSuccess }) {
    } = useForm({
       resolver: yupResolver(schemas.taskSchema),
       defaultValues: {
-         subtasks: task.subtasks.map((item) => ({
+         subtasks: task.subtasks?.map((item) => ({
             task: item.title || "",
          })),
          status: { label: task.status, value: task.status },
