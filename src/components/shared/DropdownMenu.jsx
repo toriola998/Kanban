@@ -2,7 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 
 export default function DropdownMenu({ actionType, edit, deleteItem }) {
    const menuItem =
-      "font-medium text-sm text-start py-3 px-4 hover:bg-light-grey-1";
+      "font-medium text-sm text-start py-3 px-4 hover:bg-light-grey-1 dark:hover:bg-grey-3";
 
    return (
       <div className="relative">

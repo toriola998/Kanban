@@ -39,32 +39,32 @@ export default function AddNewBoard({ handleClick, onCreateBoardSuccess }) {
       let payload = {
          name: formData.boardName,
       };
-      const isNameExist = boardNames.find(
+      const isBoardNameExist = boardNames.some(
          (item) => item.toLowerCase() === formData.boardName.toLowerCase(),
       );
-      if (isNameExist) {
-         toast.error("Board Name already exist");
+      if (isBoardNameExist) {
+         toast.error("Board Name already exists");
          return;
       }
-      let filteredColumns = [];
 
-      if (formData.columns.length === 1) {
-         // Only include if name is not empty
-         if (formData.columns[0].column.trim() !== "") {
-            filteredColumns.push({
-               name: formData.columns[0].column,
-               tasks: [],
-            });
-         }
-      } else if (formData.columns.length > 1) {
-         // Filter out any columns with empty names
-         filteredColumns = formData.columns
-            .filter((item) => item.column.trim() !== "")
-            .map((item) => ({
-               name: item.column,
-               tasks: [],
-            }));
+      // Remove empty column names and trim
+      let filteredColumns = formData.columns
+         .map((col) => col.column.trim())
+         .filter((name) => name !== "")
+         .map((name) => ({
+            name,
+            tasks: [],
+         }));
+
+      // Prevent duplicate column names
+      const uniqueNames = new Set(
+         filteredColumns.map((col) => col.name.toLowerCase()),
+      );
+      if (uniqueNames.size !== filteredColumns.length) {
+         toast.error("Column names must be unique");
+         return;
       }
+
       if (filteredColumns.length > 0) {
          payload.columns = filteredColumns;
       }
